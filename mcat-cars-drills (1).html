@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCAT CARS Mastery Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1c1c2e;
+  --paper: #f4f0e8;
+  --cream: #faf7f2;
+  --accent: #8b1a1a;
+  --accent2: #1a5c8b;
+  --gold: #c9973a;
+  --gold-light: #f0d78c;
+  --teal: #1a6b6b;
+  --muted: #6b6358;
+  --border: #d4ccbb;
+  --correct: #1a6b3a;
+  --incorrect: #8b1a1a;
+  --warn-bg: #fdf6e3;
+  --warn-border: #c9973a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+}
+
+/* HERO */
+.hero {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 64px 24px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(139,26,26,0.2) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(26,92,139,0.2) 0%, transparent 60%);
+}
+.hero-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+.hero-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.hero h1 em { color: var(--gold); font-style: italic; }
+.hero p {
+  font-size: 1.1rem;
+  color: #b0aba0;
+  max-width: 520px;
+  margin: 0 auto 32px;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+.stat-label { font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; color: #888; }
+
+/* NAV */
+.nav-bar {
+  background: white;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.nav-btn {
+  padding: 14px 22px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-btn:hover { color: var(--ink); }
+.nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* MAIN */
+main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+
+.section { display: none; animation: fadeIn 0.3s ease; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+.section-sub {
+  color: var(--muted);
+  font-size: 1rem;
+  margin-bottom: 32px;
+  font-style: italic;
+}
+
+/* CARDS */
+.card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card h3 .icon {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.icon-red { background: #ffe8e8; }
+.icon-blue { background: #e8f0ff; }
+.icon-gold { background: #fdf3dc; }
+.icon-teal { background: #e0f0f0; }
+
+.card p { color: #3a3530; margin-bottom: 10px; }
+.card p:last-child { margin-bottom: 0; }
+.card ul { padding-left: 20px; color: #3a3530; }
+.card ul li { margin-bottom: 6px; }
+.card strong { color: var(--ink); }
+
+.callout {
+  border-left: 4px solid var(--gold);
+  background: var(--warn-bg);
+  padding: 16px 20px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 16px;
+}
+.callout-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.callout p { color: #5a4a2a; font-size: 0.95rem; }
+
+/* STRATEGY CARDS */
+.strategy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+@media (max-width: 620px) { .strategy-grid { grid-template-columns: 1fr; } }
+.strat-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+}
+.strat-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.strat-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--gold);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.strat-card p { font-size: 0.9rem; color: var(--muted); }
+
+/* MISTAKE CARDS */
+.mistake-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.mistake-card.teal-border { border-left-color: var(--teal); }
+.mistake-card.gold-border { border-left-color: var(--gold); }
+.mistake-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.mistake-card p { font-size: 0.9rem; color: #3a3530; margin-bottom: 6px; }
+.mistake-card .fix {
+  font-size: 0.85rem;
+  color: var(--teal);
+  font-weight: 600;
+}
+
+/* DRILLS */
+.drill-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.drill-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+@media (max-width: 600px) { .drill-list { grid-template-columns: 1fr; } }
+.drill-item {
+  background: var(--cream);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.drill-item:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.drill-item.active-drill { border-color: var(--accent); background: #fff8f8; }
+.drill-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.drill-item h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.drill-item p { font-size: 0.82rem; color: var(--muted); }
+.drill-difficulty {
+  position: absolute;
+  top: 14px; right: 14px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 100px;
+}
+.diff-easy { background: #e0f5e8; color: var(--correct); }
+.diff-med { background: #fdf3dc; color: #a06020; }
+.diff-hard { background: #ffe8e8; color: var(--accent); }
+
+/* DRILL AREA */
+#drill-area { display: none; }
+.drill-area-inner {
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 32px;
+}
+.drill-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.drill-title-bar h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.progress-bar-wrap {
+  background: #eee;
+  border-radius: 100px;
+  height: 6px;
+  width: 180px;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+
+.passage-box {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #2a2520;
+}
+.passage-box .passage-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.question-text {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+.answer-options { margin-bottom: 20px; }
+.answer-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.92rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.answer-btn:hover:not(:disabled) { border-color: var(--accent2); background: #f0f5ff; }
+.answer-btn.selected-correct { border-color: var(--correct); background: #e8f8ee; color: var(--correct); }
+.answer-btn.selected-incorrect { border-color: var(--incorrect); background: #fff0f0; color: var(--incorrect); }
+.answer-btn.reveal-correct { border-color: var(--correct); background: #e8f8ee; }
+.answer-btn:disabled { cursor: default; }
+
+.feedback-box {
+  display: none;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+.feedback-box.correct { background: #e8f8ee; border: 1px solid var(--correct); }
+.feedback-box.incorrect { background: #fff0f0; border: 1px solid var(--incorrect); }
+.feedback-label {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+.feedback-label.correct { color: var(--correct); }
+.feedback-label.incorrect { color: var(--incorrect); }
+.feedback-box p { font-size: 0.9rem; color: #3a3530; }
+
+.btn {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover { background: var(--accent); }
+.btn.outline {
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+}
+.btn.outline:hover { background: var(--ink); color: var(--paper); }
+.btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+
+/* SCORE */
+.score-box {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 10px;
+  padding: 32px;
+  text-align: center;
+  margin-top: 20px;
+}
+.score-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--gold);
+}
+.score-label { color: #aaa; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.score-message { font-size: 1.1rem; color: #ddd; }
+
+/* TIMER */
+.timer-display {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 16px;
+}
+.timer-display.urgent { animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
+
+/* TIMED SECTION */
+.timed-setup { text-align: center; padding: 40px 20px; }
+.timed-setup h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+.timed-setup p { color: var(--muted); max-width: 500px; margin: 0 auto 24px; }
+.passage-select {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.passage-choice {
+  background: var(--cream);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-family: 'Source Sans 3', sans-serif;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+}
+.passage-choice:hover, .passage-choice.selected { border-color: var(--accent); background: #fff8f8; color: var(--accent); }
+
+/* QUESTION TYPE BADGES */
+.qtype-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: 8px;
+}
+.qtype-comp { background: #e8f0ff; color: var(--accent2); }
+.qtype-infer { background: #fdf3dc; color: #a06020; }
+.qtype-tone { background: #ede8fd; color: #6c3fc5; }
+.qtype-arg { background: #e0f5f0; color: var(--teal); }
+.qtype-main { background: #ffe8f8; color: #8b1a5c; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">MCAT Prep — Critical Analysis & Reasoning Skills</div>
+    <h1>Master the <em>CARS</em> Section</h1>
+    <p>Build the CARS brain through targeted drills, proven strategies, and real passage practice with feedback on every question.</p>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">Targeted Drills</span></div>
+      <div class="stat-item"><span class="stat-num">4</span><span class="stat-label">Question Types</span></div>
+      <div class="stat-item"><span class="stat-num">90</span><span class="stat-label">Min Real Exam</span></div>
+    </div>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
+  <button class="nav-btn" onclick="showSection('strategies')">Strategies</button>
+  <button class="nav-btn" onclick="showSection('qtypes')">Question Types</button>
+  <button class="nav-btn" onclick="showSection('mistakes')">Trap Answers</button>
+  <button class="nav-btn" onclick="showSection('drills')">Drills</button>
+  <button class="nav-btn" onclick="showSection('timed')">Timed Practice</button>
+</nav>
+
+<main>
+
+<!-- ===== OVERVIEW ===== -->
+<div id="overview" class="section active">
+  <div class="section-title">What is CARS?</div>
+  <div class="section-sub">Understanding the game before you play it</div>
+
+  <div class="card">
+    <h3><span class="icon icon-blue">📖</span> The CARS Section at a Glance</h3>
+    <p>The Critical Analysis and Reasoning Skills section tests your ability to comprehend, analyze, and reason about dense passages from the humanities and social sciences. You get <strong>9 passages and 53 questions in 90 minutes</strong> — roughly 10 minutes per passage. There is no outside knowledge required. Every answer is in or supported by the passage.</p>
+    <p>Passages come from fields like philosophy, history, literature, art criticism, sociology, and ethics. They are often dense, opinion-driven, and deliberately complex.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-label">The Golden Rule</div>
+    <p>The CARS section does not test what you know. It tests how well you read and reason. A passage about 18th-century Portuguese pottery is not testing your knowledge of pottery — it is testing whether you can understand an argument and reason about it. Everything you need is on the page.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-gold">🧠</span> The Four Reasoning Foundations</h3>
+    <p>AAMC categorizes CARS questions into four foundations of reasoning:</p>
+    <ul>
+      <li><strong>Foundations of Comprehension (~30%):</strong> What did the author literally say? Main idea, vocabulary in context, factual recall from the passage.</li>
+      <li><strong>Reasoning Within the Text (~30%):</strong> How does the argument work? Identifying evidence, author's purpose, how one paragraph supports another.</li>
+      <li><strong>Reasoning Beyond the Text (~40%):</strong> What would the author agree with? How would new information affect the argument? These questions extend beyond the passage itself.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-teal">⏱️</span> The Time Challenge</h3>
+    <p>At roughly <strong>10 minutes per passage</strong>, you have about 3–4 minutes to read and 1 minute per question. Most students fail CARS not because they don't understand the passage, but because they spend too long reading and not enough time reasoning on questions.</p>
+    <p>The goal of these drills is to build automatic reading instincts so that comprehension requires less active effort, freeing your cognitive bandwidth for reasoning and answer evaluation.</p>
+  </div>
+</div>
+
+<!-- ===== STRATEGIES ===== -->
+<div id="strategies" class="section">
+  <div class="section-title">Proven Reading Strategies</div>
+  <div class="section-sub">Techniques that actually work on test day</div>
+
+  <div class="callout">
+    <div class="callout-label">Core Principle</div>
+    <p>Your goal while reading is not to understand every detail. Your goal is to understand the author's main point, their attitude toward it, and the structure of their argument. Details can be found later when a question asks about them.</p>
+  </div>
+
+  <div class="strategy-grid">
+    <div class="strat-card">
+      <h4><span class="strat-num">1</span> Find the "Why"</h4>
+      <p>Every CARS passage exists to make a point. As you read, ask: "Why is the author telling me this? What do they want me to believe?" The answer is usually in the first or last paragraph.</p>
+    </div>
+    <div class="strat-card">
+      <h4><span class="strat-num">2</span> Track Attitude Shifts</h4>
+      <p>Watch for words like "however," "but," "yet," "although," and "despite." These signal the author's real position and where they push back against other views.</p>
+    </div>
+    <div class="strat-card">
+      <h4><span class="strat-num">3</span> Active Paragraph Summaries</h4>
+      <p>After each paragraph, mentally note its function in one phrase: "gives example," "introduces counterargument," "author's main claim," "historical context." This builds a passage map.</p>
+    </div>
+    <div class="strat-card">
+      <h4><span class="strat-num">4</span> Don't Pre-Solve</h4>
+      <p>Read to understand, not to predict questions. Students who try to "figure out what they'll ask" while reading often miss the author's actual argument. Stay in the text.</p>
+    </div>
+    <div class="strat-card">
+      <h4><span class="strat-num">5</span> The Two-Pass Method</h4>
+      <p>On questions, read all four answers before committing. The "first good answer" is often a trap. The best answer must be both true according to the passage AND responsive to what the question actually asks.</p>
+    </div>
+    <div class="strat-card">
+      <h4><span class="strat-num">6</span> Scope Control</h4>
+      <p>Wrong answers are often too broad, too narrow, or outside the passage's scope. Ask: "Is this what the passage is actually about, or did I bring outside knowledge here?"</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-red">🔑</span> The Author's Attitude Is Everything</h3>
+    <p>Roughly 40–50% of CARS questions ask you to reason about the author's perspective in some way — main argument, attitude, likely agreement with a new claim. Build the habit of identifying:</p>
+    <ul>
+      <li><strong>What does the author believe?</strong> (Their central claim)</li>
+      <li><strong>What do they oppose?</strong> (What they argue against)</li>
+      <li><strong>How confident are they?</strong> (Hedging language vs. certainty)</li>
+      <li><strong>What is their tone?</strong> (Critical, celebratory, cautious, nostalgic, etc.)</li>
+    </ul>
+    <p>If you can answer these four questions after reading a passage, you can handle most CARS questions without re-reading large sections.</p>
+  </div>
+</div>
+
+<!-- ===== QUESTION TYPES ===== -->
+<div id="qtypes" class="section">
+  <div class="section-title">The Four Question Types</div>
+  <div class="section-sub">Know what each question type is really asking</div>
+
+  <div class="card">
+    <h3><span class="icon icon-blue">💡</span> Main Idea / Central Thesis</h3>
+    <span class="qtype-badge qtype-main">Foundation: Comprehension</span>
+    <p>These ask: "What is this passage primarily about?" or "Which best summarizes the author's central argument?"</p>
+    <p><strong>The trap:</strong> Answers that are true but too narrow (just about one paragraph) or too broad (beyond what the passage actually argues).</p>
+    <p><strong>The fix:</strong> The correct answer must account for the entire passage — why the author started AND ended where they did.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-blue">🔍</span> Tone &amp; Attitude</h3>
+    <span class="qtype-badge qtype-tone">Foundation: Comprehension</span>
+    <p>These ask: "What is the author's attitude toward X?" or "How does the author view this perspective?"</p>
+    <p><strong>The trap:</strong> Picking an extreme tone when the author is measured, or vice versa. Also, confusing the author's own view with a position they are describing but not endorsing.</p>
+    <p><strong>The fix:</strong> Find language that reveals emotion or judgment. Words like "unfortunately," "merely," "rightly," or "naively" are attitude markers.</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-gold">🏗️</span> Argument Structure</h3>
+    <span class="qtype-badge qtype-arg">Foundation: Reasoning Within Text</span>
+    <p>These ask: "What is the function of this paragraph?" or "How does the example in paragraph 3 support the author's argument?"</p>
+    <p><strong>The trap:</strong> Describing what the paragraph says (its content) rather than what it does (its function).</p>
+    <p><strong>The fix:</strong> Think in terms like: "This provides evidence for...", "This introduces a counterargument that the author then refutes...", "This qualifies the previous claim by..."</p>
+  </div>
+
+  <div class="card">
+    <h3><span class="icon icon-teal">🔮</span> Inference &amp; Application</h3>
+    <span class="qtype-badge qtype-infer">Foundation: Reasoning Beyond Text</span>
+    <p>These ask: "Which of the following would the author most likely agree with?" or "How would the author respond to this new claim?"</p>
+    <p><strong>The trap:</strong> Picking answers that sound good or seem logical but aren't grounded in what the author actually argued. Outside reasoning kills here.</p>
+    <p><strong>The fix:</strong> Tie your answer back to a specific sentence or idea from the passage. If you can't point to where the passage supports it, be very cautious.</p>
+  </div>
+</div>
+
+<!-- ===== MISTAKES / TRAPS ===== -->
+<div id="mistakes" class="section">
+  <div class="section-title">Common Trap Answers</div>
+  <div class="section-sub">The mistakes that separate 125s from 132s</div>
+
+  <div class="mistake-card">
+    <h4>🎯 The "Too Extreme" Answer</h4>
+    <p>Authors of CARS passages almost always use measured, qualified language ("tends to," "may suggest," "often"). Trap answers use extreme language like "always," "never," "proves," or "completely eliminates."</p>
+    <p class="fix">FIX: If an answer uses extreme language, verify the author actually used that level of certainty. Usually they didn't.</p>
+  </div>
+
+  <div class="mistake-card teal-border">
+    <h4>🌊 The "True But Wrong" Answer</h4>
+    <p>This is the most common wrong answer on CARS. The statement is true according to the passage — it's mentioned somewhere — but it doesn't answer the specific question asked. You feel good about it because it's "in there."</p>
+    <p class="fix">FIX: Read the question stem carefully. Ask: "Is this answer actually addressing what was asked, not just something true about the passage?"</p>
+  </div>
+
+  <div class="mistake-card gold-border">
+    <h4>📚 The "Outside Knowledge" Trap</h4>
+    <p>You bring in facts you know from biology, history, or other fields that the author never mentions. The passage is about art theory and you select an answer based on neuroscience you remember from other studying.</p>
+    <p class="fix">FIX: CARS is a closed universe. If it's not in the passage, it doesn't exist for these questions. Be suspicious of any knowledge you're adding from outside.</p>
+  </div>
+
+  <div class="mistake-card">
+    <h4>🔄 The "Author vs. Other View" Confusion</h4>
+    <p>CARS authors frequently describe viewpoints they disagree with before arguing against them. Students select answers that match the opposing view the author is critiquing, thinking it's the author's position.</p>
+    <p class="fix">FIX: Track who is speaking at every moment. Flag phrases like "some argue," "critics claim," "others believe" — these are NOT the author's position.</p>
+  </div>
+
+  <div class="mistake-card teal-border">
+    <h4>🎪 The "Sounds Like The Right Topic" Answer</h4>
+    <p>This answer is about the right subject matter but gets the relationship wrong. The passage argues that art reflects economic conditions; the trap says art shapes economic conditions. Same topic, reversed logic.</p>
+    <p class="fix">FIX: Don't just match topic words — verify the direction and nature of any claimed relationship matches the passage.</p>
+  </div>
+
+  <div class="mistake-card gold-border">
+    <h4>📏 The "Too Specific / Too General" Mismatch</h4>
+    <p>For main idea questions especially, one wrong answer will summarize only one section of the passage. Another will make a claim far broader than the author actually makes.</p>
+    <p class="fix">FIX: The correct main idea answer must cover the whole passage without going beyond it. Test every candidate answer against the opening and closing paragraphs.</p>
+  </div>
+</div>
+
+<!-- ===== DRILLS ===== -->
+<div id="drills" class="section">
+  <div class="section-title">The 8 CARS Drills</div>
+  <div class="section-sub">Targeted exercises to build specific CARS skills</div>
+
+  <div class="callout">
+    <div class="callout-label">How to Use These Drills</div>
+    <p>Each drill isolates one critical CARS skill. Do them in order the first time. Return to weak areas repeatedly. The goal is to build automatic responses — like muscle memory for reasoning.</p>
+  </div>
+
+  <div class="drill-list">
+    <div class="drill-item" onclick="loadDrill(0)">
+      <div class="drill-badge">Drill 1</div>
+      <span class="drill-difficulty diff-easy">Foundational</span>
+      <h4>Main Idea Identification</h4>
+      <p>Isolate the author's central thesis from supporting claims and examples</p>
+    </div>
+    <div class="drill-item" onclick="loadDrill(1)">
+      <div class="drill-badge">Drill 2</div>
+      <span class="drill-difficulty diff-easy">Foundational</span>
+      <h4>Author Tone Detection</h4>
+      <p>Read for attitude: critical, supportive, cautious, nostalgic, ironic</p>
+    </div>
+    <div class="drill-item" onclick="loadDrill(2)">
+      <div class="drill-badge">Drill 3</div>
+      <span class="drill-difficulty diff-med">Intermediate</span>
+      <h4>Argument Structure</h4>
+      <p>Identify the function of paragraphs and how evidence supports claims</p>
+    </div>
+    <div class="drill-item" onclick="loadDrill(3)">
+      <div class="drill-badge">Drill 4</div>
+      <span class="drill-difficulty diff-med">Intermediate</span>
+      <h4>Inference Reasoning</h4>
+      <p>Determine what the author would most likely agree or disagree with</p>
+    </div>
+    <div class="drill-item" onclick="loadDrill(4)">
+      <div class="drill-badge">Drill 5</div>
+      <span class="drill-difficulty diff-med">Intermediate</span>
+      <h4>Trap Answer Detection</h4>
+      <p>Identify "true but wrong" and "outside knowledge" traps in real time</p>
+    </div>
+    <div class="drill-item" onclick="loadDrill(5)">
+      <div class="drill-badge">Drill 6</div>
+      <span class="drill-difficulty diff-hard">Advanced</span>
+      <h4>Author vs. Other Views</h4>
+      <p>Distinguish the author's claims from those they describe but oppose</p>
+    </div>
+    <div class="drill-item" onclick="loadDrill(6)">
+      <div class="drill-badge">Drill 7</div>
+      <span class="drill-difficulty diff-hard">Advanced</span>
+      <h4>Application to New Info</h4>
+      <p>Apply the author's argument to scenarios not mentioned in the passage</p>
+    </div>
+    <div class="drill-item" onclick="loadDrill(7)">
+      <div class="drill-badge">Drill 8</div>
+      <span class="drill-difficulty diff-hard">Advanced</span>
+      <h4>Full Passage Analysis</h4>
+      <p>Complete passage with all four question types plus structural mapping</p>
+    </div>
+  </div>
+
+  <div id="drill-area">
+    <div class="drill-area-inner">
+      <div class="drill-title-bar">
+        <h3 id="drill-name"></h3>
+        <div>
+          <div style="font-size:0.78rem;color:var(--muted);margin-bottom:4px;text-align:right" id="drill-progress-label"></div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" id="drill-progress-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div id="drill-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TIMED PRACTICE ===== -->
+<div id="timed" class="section">
+  <div class="section-title">Timed Passage Practice</div>
+  <div class="section-sub">Real MCAT pacing — 10 minutes per passage</div>
+
+  <div id="timed-setup-screen">
+    <div class="timed-setup">
+      <h3>Select a Passage</h3>
+      <p>Choose from three full MCAT-style passages. Each includes 5–6 questions covering all question types. Target: 10 minutes total.</p>
+      <div class="passage-select">
+        <button class="passage-choice selected" onclick="selectTimedPassage(0, this)">Passage A<br><small>Philosophy of Art</small></button>
+        <button class="passage-choice" onclick="selectTimedPassage(1, this)">Passage B<br><small>Social History</small></button>
+        <button class="passage-choice" onclick="selectTimedPassage(2, this)">Passage C<br><small>Ethics &amp; Justice</small></button>
+      </div>
+      <button class="btn" onclick="startTimedPassage()">Begin — 10:00 Timer</button>
+    </div>
+  </div>
+
+  <div id="timed-active-screen" style="display:none">
+    <div class="timer-display" id="timed-timer">10:00</div>
+    <div id="timed-passage-content"></div>
+    <div id="timed-questions-content"></div>
+    <div class="btn-row">
+      <button class="btn" id="timed-submit-btn" onclick="submitTimedPassage()" style="display:none">Submit Answers</button>
+    </div>
+    <div id="timed-results" style="display:none"></div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ===== NAVIGATION =====
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ===== DRILL DATA =====
+const drills = [
+  // DRILL 0: MAIN IDEA
+  {
+    name: "Drill 1: Main Idea Identification",
+    questions: [
+      {
+        type: "comp",
+        passage: "The decline of the handwritten letter has been mourned as a cultural catastrophe by critics who see in it the loss of something irreplaceable: the physical trace of a person's thought made visible. Yet these laments often conflate two distinct things — the material object (the letter itself) and the communicative act it once enabled. What electronic communication has ended is not intimacy or intellectual exchange, but merely one medium through which these were once transmitted. The capacity for careful, sustained expression has not vanished; it has migrated.",
+        question: "Which of the following best captures the author's central argument?",
+        answers: [
+          "Handwritten letters have great historical value and should be preserved.",
+          "Critics who lament the loss of handwritten letters misidentify what has actually been lost.",
+          "Electronic communication is superior to handwritten letters in every meaningful way.",
+          "The decline of letter-writing reflects a broader collapse in literacy and careful thought."
+        ],
+        correct: 1,
+        feedback: [
+          "The passage does not argue letters should be preserved — the author is actually pushing back on this idea of loss.",
+          "Correct. The author's core move is separating the material object (the letter) from the communicative act it enabled. Critics, the author argues, are mourning the medium rather than any real loss of capacity.",
+          "The passage doesn't argue electronic communication is superior — only that the capacity for sustained expression has 'migrated.' This is too strong a claim.",
+          "The author explicitly rejects this — they say the capacity for 'careful, sustained expression has not vanished.' This is the opposite of what the author argues."
+        ]
+      },
+      {
+        type: "comp",
+        passage: "Modern urban planning's faith in the rational arrangement of space — the belief that well-designed cities produce well-functioning citizens — has consistently underestimated the role of accident, improvisation, and the unplanned encounter in generating the social vitality planners most desire. The communities that feel most alive are rarely those that were most comprehensively planned. Jane Jacobs understood this paradox. Her critique of mid-century urban renewal was not merely aesthetic but epistemological: planners, she argued, could not know in advance what a neighborhood needed because neighborhoods are created by processes that resist prediction.",
+        question: "The author's primary purpose in this passage is to:",
+        answers: [
+          "provide a biographical account of Jane Jacobs' contributions to urban planning.",
+          "argue that urban planning itself should be abandoned in favor of unregulated development.",
+          "challenge the assumption that rational, comprehensive planning produces socially vibrant communities.",
+          "document the historical failures of mid-century urban renewal projects in American cities."
+        ],
+        correct: 2,
+        feedback: [
+          "Jacobs is mentioned as support for the argument, not as the subject. The passage is about urban planning philosophy, not her biography.",
+          "The passage critiques over-reliance on rational planning but does not argue for abandoning planning altogether — this is too extreme.",
+          "Correct. The passage opens with the claim that rational planning 'consistently underestimated' unplanned social vitality, and the Jacobs reference deepens this epistemological critique. This captures the whole passage.",
+          "While urban renewal is mentioned, documenting its failures is not the primary purpose — it is cited as evidence for the broader argument about rational planning."
+        ]
+      }
+    ]
+  },
+
+  // DRILL 1: TONE DETECTION
+  {
+    name: "Drill 2: Author Tone Detection",
+    questions: [
+      {
+        type: "tone",
+        passage: "One must acknowledge that behavioral economics has produced genuine insights. The recognition that humans are predictably irrational — that our decisions are shaped by cognitive biases, framing effects, and social pressure — represents an important corrective to the absurdly optimistic assumptions of classical economic models. That said, the field's growing ambition concerns me. When behavioral economists propose that governments should engineer 'nudges' to guide citizens toward better choices, they have quietly shifted from descriptive science to prescriptive social control. The epistemological question — who decides what a 'better' choice is — goes disturbingly unexamined.",
+        question: "The author's attitude toward behavioral economics is best described as:",
+        answers: [
+          "wholly dismissive — the author believes the field has produced no valuable insights.",
+          "uncritically enthusiastic — the author supports behavioral economics and its policy applications.",
+          "cautiously critical — the author acknowledges value in the field's findings but expresses concern about its expanding policy role.",
+          "morally outraged — the author sees behavioral economics as a fundamental threat to human freedom."
+        ],
+        correct: 2,
+        feedback: [
+          "The author opens by acknowledging 'genuine insights' — this is not dismissal. Tone questions require careful tracking of qualifications.",
+          "The author explicitly says the field's 'growing ambition concerns me' and that a key question goes 'disturbingly unexamined.' This is not uncritical enthusiasm.",
+          "Correct. The author acknowledges real value ('genuine insights,' 'important corrective') before pivoting with 'That said' to express concern about policy applications. This is classic qualified, cautious criticism.",
+          "The author uses measured language ('concerns me,' 'goes unexamined') rather than outrage. 'Disturbingly' is the strongest word, but the overall tone is analytical critique, not moral outrage."
+        ]
+      },
+      {
+        type: "tone",
+        passage: "The history of Western philosophy's engagement with non-Western thought is largely a history of appropriation without acknowledgment. Concepts from Vedantic philosophy appear in German Idealism, repackaged as original insight. Buddhist notions of impermanence surface in Heideggerian analysis, their origins obscured. I do not raise this to condemn individual philosophers, many of whom may have been unaware of the intellectual genealogies they were inheriting. The problem is systemic: a discipline that presents itself as universal has been constituted, in ways it rarely examines, through selective borrowing from traditions it simultaneously marginalizes.",
+        question: "The author's tone in this passage can best be described as:",
+        answers: [
+          "nostalgic and celebratory toward the richness of the Western philosophical tradition.",
+          "accusatory and personally hostile toward the philosophers mentioned.",
+          "analytically critical, identifying a structural problem while avoiding personal blame.",
+          "pessimistic, suggesting that philosophical traditions will always appropriate from one another."
+        ],
+        correct: 2,
+        feedback: [
+          "The author is critiquing the Western tradition, not celebrating it. There is no nostalgia here.",
+          "The author explicitly says 'I do not raise this to condemn individual philosophers.' Personal hostility is directly disclaimed.",
+          "Correct. The author identifies a 'systemic' problem and frames it structurally, while explicitly avoiding personal condemnation. This is analytical critique — measured, precise, and targeted at structure rather than individuals.",
+          "The author doesn't argue this will always happen — the critique is specific and historical, not a universal claim about all philosophical traditions."
+        ]
+      }
+    ]
+  },
+
+  // DRILL 2: ARGUMENT STRUCTURE
+  {
+    name: "Drill 3: Argument Structure",
+    questions: [
+      {
+        type: "arg",
+        passage: "Paragraph 1: For decades, historians treated the Industrial Revolution as an unambiguous triumph — a story of technological progress lifting living standards and creating modern prosperity.\n\nParagraph 2: Recent scholarship has complicated this narrative considerably. Studies of real wages, life expectancy, and urban conditions in early industrial England reveal significant deterioration for large segments of the working population during the critical decades of industrialization itself.\n\nParagraph 3: This does not mean the optimistic narrative was entirely wrong. Long-run economic growth did eventually materialize, and standards of living did improve dramatically — just not as immediately or as universally as earlier historians suggested.\n\nParagraph 4: The more nuanced conclusion is that the Industrial Revolution produced costs and benefits distributed unequally across time and across social classes, and that any adequate account must hold both the suffering and the eventual gains in view simultaneously.",
+        question: "What is the primary function of Paragraph 3 in the context of the overall argument?",
+        answers: [
+          "To introduce new evidence that challenges the thesis of Paragraph 2.",
+          "To qualify the revisionist position by acknowledging what the earlier narrative got right.",
+          "To summarize the main argument of the passage as a whole.",
+          "To provide an example of the 'unequal distribution' discussed in Paragraph 4."
+        ],
+        correct: 1,
+        feedback: [
+          "Paragraph 3 doesn't challenge Paragraph 2 — it qualifies it. The author is adding nuance, not contradicting their own claim.",
+          "Correct. Paragraph 3 begins with 'This does not mean...' — a classic qualification move. The author is preventing the revisionist argument (Paragraph 2) from going too far, preserving what was valid in the original optimistic narrative.",
+          "The conclusion comes in Paragraph 4. Paragraph 3 is a qualification, not the final synthesis.",
+          "Paragraph 3 doesn't illustrate unequal distribution — that concept appears only in Paragraph 4."
+        ]
+      },
+      {
+        type: "arg",
+        passage: "Consider how advocates of 'evidence-based medicine' have framed the randomized controlled trial (RCT) as the gold standard of medical evidence. This framing is not scientifically neutral. By privileging population-level statistical patterns over the individual patient's specific physiology, history, and context, the RCT framework systematically discounts forms of medical knowledge that do not fit its methodology. The knowledge a physician accumulates through years of observing individual patients — what we might call clinical wisdom — is rendered invisible by this hierarchy precisely because it cannot be standardized and measured.",
+        question: "The author uses the phrase 'evidence-based medicine' in quotation marks primarily to:",
+        answers: [
+          "indicate that the author supports this approach and is introducing it as a technical term.",
+          "signal skepticism about whether the approach is as evidence-based as its name implies.",
+          "mark the phrase as one coined by another scholar whom the author intends to critique.",
+          "distinguish this form of medicine from other, less evidence-driven alternatives."
+        ],
+        correct: 1,
+        feedback: [
+          "The author is clearly critical of this framing — they argue it is 'not scientifically neutral.' Quotation marks here do not signal support.",
+          "Correct. Using quotation marks around a term typically signals that the author is questioning the term's self-description or conventional framing. Given the passage's critique that the approach 'systematically discounts' other forms of knowledge, the author is implying it may not actually be as purely 'evidence-based' as claimed.",
+          "No specific other scholar is mentioned here — this is not a citation convention.",
+          "Distinguishing is not the rhetorical function of the quotation marks — the skepticism is the key move."
+        ]
+      }
+    ]
+  },
+
+  // DRILL 3: INFERENCE
+  {
+    name: "Drill 4: Inference Reasoning",
+    questions: [
+      {
+        type: "infer",
+        passage: "The assumption that competition drives innovation is so embedded in economic orthodoxy that it rarely requires defense. Yet the historical record complicates the picture. Many of the most transformative technological advances of the twentieth century — the internet, GPS, touchscreen technology, and the Human Genome Project — originated in contexts where competition was absent or suppressed: government research programs, university laboratories, or publicly funded consortia. The competitive marketplace that capitalism celebrates may be better at diffusing and commercializing innovations than at generating the foundational breakthroughs on which those innovations depend.",
+        question: "Based on the passage, the author would most likely agree with which of the following statements?",
+        answers: [
+          "Competition should be eliminated from economic systems and replaced with centralized planning.",
+          "Government research programs are always more innovative than private enterprises.",
+          "The relationship between competition and innovation is more complex than is typically acknowledged.",
+          "The internet is a better example of successful innovation than GPS or the Human Genome Project."
+        ],
+        correct: 2,
+        feedback: [
+          "This goes far beyond what the author argues. The author qualifies competition's role in innovation; they do not argue for eliminating competition or replacing it with central planning. Extreme inference trap.",
+          "'Always' is too strong and outside the passage's scope. The author gives examples where government funding drove innovation, but does not make a universal comparative claim.",
+          "Correct. This directly reflects the passage's argument. The author opens by noting the assumption 'rarely requires defense,' then complicates it with historical evidence, concluding that competition may be better at 'diffusing' than 'generating' innovations.",
+          "The author treats all three as equivalent examples of the same phenomenon. There is no comparison among them — this answer introduces a distinction the passage does not make."
+        ]
+      },
+      {
+        type: "infer",
+        passage: "Empathy, for all its virtues, is an unreliable guide to ethical action. We are hardwired to feel more for those who are near, visible, and similar to us than for distant strangers whose suffering is statistically far greater. A photograph of a single drowning child generates more charitable giving than data on thousands of preventable deaths. This is not a failure of compassion but a feature of how empathy operates: it is a spotlight, not a searchlight. The philosopher Peter Singer's insistence that we should treat all suffering equally regardless of proximity represents not the perfection of empathy but its systematic override.",
+        question: "Which of the following would the author most likely view as illustrating their central point about empathy?",
+        answers: [
+          "A study showing that people donate more to animal charities than to international poverty relief.",
+          "Evidence that individuals who score high on empathy measures tend to be more ethical in their daily lives.",
+          "Research demonstrating that people donate more generously when presented with a story about one identifiable victim than with statistics about many victims.",
+          "Data showing that empathy levels vary significantly across different cultures and societies."
+        ],
+        correct: 2,
+        feedback: [
+          "This might relate to empathy bias, but the passage's core example is about numerical scale — one vs. many — not about species comparison. Option C is more directly illustrative.",
+          "This actually contradicts or sidesteps the author's argument, which is that empathy is an unreliable guide to ethical action, not that it correlates with ethical behavior.",
+          "Correct. The passage explicitly uses the example of 'a photograph of a single drowning child' generating more giving than 'thousands of preventable deaths.' This answer directly parallels that example and illustrates empathy as a 'spotlight' that responds to the identifiable individual.",
+          "Cultural variation in empathy levels is not what the passage is arguing about — the author's focus is empathy's structural bias toward the near, visible, and individual."
+        ]
+      }
+    ]
+  },
+
+  // DRILL 4: TRAP ANSWERS
+  {
+    name: "Drill 5: Trap Answer Detection",
+    questions: [
+      {
+        type: "trap",
+        passage: "The rise of the personal essay as a dominant literary form in the late twentieth century reflected not merely a shift in taste but a deeper epistemological shift: a growing skepticism about the possibility of objective knowledge and a corresponding valorization of the individual, situated perspective. Where earlier literary forms often sought universal truths, the personal essay embraced the particular, the contingent, and the frankly subjective. Its authority derived not from the universality of its claims but from the specificity of its vision.",
+        question: "According to the passage, what distinguished the personal essay from earlier literary forms?",
+        answers: [
+          "It was more commercially successful than earlier literary forms.",
+          "It rejected the pursuit of universal truths in favor of particular, subjective perspective.",
+          "It was the only literary form that could accurately represent human experience.",
+          "It emerged specifically in the United States in the late twentieth century."
+        ],
+        correct: 1,
+        explanation: "Watch for the trap answers here: A introduces commercial success, which is never mentioned. C uses 'only' — extreme language the passage doesn't support. D specifies the United States, which the passage never mentions. Only B directly reflects what the passage says.",
+        feedback: [
+          "Commercial success is never mentioned in the passage. This is classic outside knowledge introduced to sound plausible. Always ask: is this actually in the passage?",
+          "Correct. The passage explicitly states the personal essay 'embraced the particular, the contingent, and the frankly subjective' where 'earlier literary forms often sought universal truths.' This is the key contrast the author draws.",
+          "'Only form that could accurately represent' is far stronger than anything the passage claims. This is the 'too extreme' trap — the passage does not argue the personal essay was uniquely capable.",
+          "The passage says 'late twentieth century' but never specifies the United States. Adding specificity not supported by the passage is a common trap."
+        ]
+      },
+      {
+        type: "trap",
+        passage: "Critics of social media's role in democracy often point to echo chambers and algorithmic reinforcement of existing beliefs as evidence that these platforms undermine deliberative democracy. This critique has real merit. Yet the same critics rarely acknowledge that the forms of democratic deliberation they idealize — the town hall, the public sphere, the free press — were never as inclusive or as rational as the Habermasian ideal suggests. The distortions social media introduces are new in character but not unprecedented in consequence.",
+        question: "Based on the passage, which of the following best represents the author's position?",
+        answers: [
+          "Social media presents no genuine threats to democratic deliberation.",
+          "Critics of social media are entirely wrong about its effects on democracy.",
+          "While social media's harms to democracy are real, critics ignore that traditional democratic institutions also had significant limitations.",
+          "Jürgen Habermas provides the best framework for evaluating social media's impact on democracy."
+        ],
+        correct: 2,
+        feedback: [
+          "This is the opposite of the passage. The author explicitly states the critique of social media 'has real merit.' This is a trap — don't over-correct when the author qualifies a position.",
+          "The author agrees with the critics that social media has real effects. They are adding nuance, not rejecting the critique entirely.",
+          "Correct. The author's move is classic: 'this critique has real merit' followed by 'yet' — introducing the qualification that critics ignore the pre-existing limitations of traditional democratic forms.",
+          "Habermas is mentioned only to say the ideal he represents was never fully realized in practice. The passage does not endorse his framework."
+        ]
+      }
+    ]
+  },
+
+  // DRILL 5: AUTHOR VS. OTHER VIEWS
+  {
+    name: "Drill 6: Author vs. Other Views",
+    questions: [
+      {
+        type: "arg",
+        passage: "Defenders of animal agriculture frequently argue that human cognitive and moral capacities place us in a fundamentally different ethical category from other animals, such that practices causing significant animal suffering can be justified by comparatively minor human interests. Peter Singer and other utilitarian philosophers reject this view, arguing that the capacity to suffer — not cognitive complexity — is the morally relevant criterion. I find the utilitarian argument more compelling in its diagnosis than in its prescription: the suffering-centered framework correctly identifies what is morally salient about the treatment of animals, but its demand that we weigh animal suffering equally with human suffering in all circumstances leads to conclusions that few would endorse.",
+        question: "Which of the following best describes the author's own position?",
+        answers: [
+          "Animal agriculture is morally defensible because human interests outweigh animal interests.",
+          "The utilitarian framework for animal ethics is correct in all respects and should be fully adopted.",
+          "The suffering-centered view correctly identifies the core ethical issue but overreaches in its practical implications.",
+          "Peter Singer's argument is fundamentally flawed and should be rejected."
+        ],
+        correct: 2,
+        feedback: [
+          "This is the position of the 'defenders of animal agriculture' that the author is implicitly distancing from — the author finds the utilitarian counterargument 'more compelling.'",
+          "The author explicitly says they find the utilitarian argument more compelling 'in its diagnosis than in its prescription' — meaning they accept part of it but not all.",
+          "Correct. The author says the suffering-centered framework 'correctly identifies what is morally salient' (accepts the diagnosis) but that its prescriptions 'lead to conclusions that few would endorse' (rejects the full implications). This is the author's own qualified position.",
+          "The author finds Singer's argument 'more compelling' than the alternative — they are critiquing it, not rejecting it fundamentally."
+        ]
+      },
+      {
+        type: "arg",
+        passage: "Some scholars have argued that Shakespeare's plays reveal a coherent political philosophy — a kind of proto-republican skepticism of monarchical power. The evidence marshaled for this view is often selective: passages expressing doubt about absolute authority are cited, while equally prominent passages affirming the necessity of hierarchy and order are minimized. I do not think Shakespeare's plays express a single coherent political position. They are better understood as sustained explorations of political tensions that resist resolution — works that make the strongest possible case for multiple competing positions precisely because their author grasped the genuine difficulty of political life.",
+        question: "The author would most likely agree with which of the following statements about Shakespeare's political views as expressed in his plays?",
+        answers: [
+          "Shakespeare was a proto-republican who subtly expressed his skepticism of monarchical authority.",
+          "Shakespeare was a committed defender of hierarchical order and the monarchy.",
+          "Shakespeare's plays resist reduction to a single coherent political position.",
+          "Shakespeare deliberately concealed his political views to avoid censorship."
+        ],
+        correct: 2,
+        feedback: [
+          "This is the position the author is arguing against — the 'proto-republican' view that the author says relies on 'selective' evidence.",
+          "The author doesn't argue this either — they explicitly say the plays resist a single position, which includes this one.",
+          "Correct. The author directly states: 'I do not think Shakespeare's plays express a single coherent political position.' They argue instead that the plays explore tensions that 'resist resolution.'",
+          "Concealing views for censorship reasons is never mentioned in the passage. This introduces a motive the author does not discuss."
+        ]
+      }
+    ]
+  },
+
+  // DRILL 6: APPLICATION
+  {
+    name: "Drill 7: Application to New Information",
+    questions: [
+      {
+        type: "infer",
+        passage: "The sociology of knowledge asks not just what people believe, but why they believe it — what social conditions make certain ideas thinkable, credible, and worth defending. Scientific knowledge is not exempt from this analysis. The institutions, funding structures, and professional incentives of modern science shape which questions get asked, which methods are considered legitimate, and which results receive attention. This does not mean scientific knowledge is merely subjective or socially constructed in a way that denies its connection to reality. It means that the social organization of inquiry leaves traces in the knowledge it produces.",
+        question: "Suppose a study found that pharmaceutical research funded by drug companies consistently produced more favorable results than independent academic research on the same drugs. How would the author most likely interpret this finding?",
+        answers: [
+          "As proof that all pharmaceutical knowledge is false and should be rejected.",
+          "As evidence that social and institutional factors shape the production of scientific knowledge.",
+          "As a reason to abolish corporate funding for scientific research.",
+          "As irrelevant, since the author argues that science is purely objective."
+        ],
+        correct: 1,
+        feedback: [
+          "The author explicitly disclaims the view that social construction 'denies connection to reality.' They would not leap to calling all pharmaceutical knowledge false — this is a trap using the author's argument taken too far.",
+          "Correct. The author argues that 'institutions, funding structures, and professional incentives...shape which questions get asked' and 'leave traces in the knowledge produced.' Industry-favorable research patterns are a direct illustration of this thesis.",
+          "The author doesn't make policy prescriptions — they offer an analytical framework. Abolishing corporate funding would be an application beyond what the passage argues.",
+          "The author explicitly argues the opposite — that social organization shapes scientific knowledge. The question describes exactly what the author would predict."
+        ]
+      },
+      {
+        type: "infer",
+        passage: "The modern obsession with authenticity — the demand that individuals express their 'true selves' and resist social conformity — carries with it an unexamined assumption: that there is a true self to express, independent of and prior to the social relationships and cultural contexts in which the individual has been formed. Philosophers in the phenomenological tradition have long challenged this assumption. The self, on their account, is not discovered but constituted — it emerges through engagement with others, through language, through culture. The authentic self is not the self that escapes social influence but the self that owns its constituted nature honestly.",
+        question: "Based on the author's argument, how would they most likely evaluate a therapeutic approach that encourages clients to 'strip away social conditioning' to find their 'core self'?",
+        answers: [
+          "As a valuable technique that aligns with phenomenological insights about the self.",
+          "As philosophically confused, since it assumes the existence of a pre-social self that the author argues does not exist.",
+          "As inappropriate for therapeutic settings but potentially valid in philosophical contexts.",
+          "As dangerous because it encourages anti-social behavior."
+        ],
+        correct: 1,
+        feedback: [
+          "This is the opposite of what the author would say. The phenomenological view that the author endorses directly contradicts the idea of a 'core self' beneath social conditioning.",
+          "Correct. The author argues there is no self 'independent of and prior to social relationships and cultural contexts.' A therapy premised on stripping away social conditioning to find a 'core self' assumes precisely what the author argues is philosophically mistaken.",
+          "The author makes no distinction between therapeutic and philosophical contexts — the philosophical claim applies universally.",
+          "The author never argues authenticity-seeking is dangerous in a behavioral sense — the critique is philosophical, not about social consequences."
+        ]
+      }
+    ]
+  },
+
+  // DRILL 7: FULL PASSAGE
+  {
+    name: "Drill 8: Full Passage Analysis",
+    questions: [
+      {
+        type: "comp",
+        passage: "The debate over whether photography is an art form has a long and somewhat embarrassing history. For much of the nineteenth century, critics dismissed the photograph as a mechanical record rather than a creative act, arguing that without the transformative intervention of the artist's hand, the camera produced mere documentation rather than art. These critics were not simply wrong — they identified something real about the ontological difference between traditional and photographic representation. What they failed to grasp was that the creative intervention in photography happens before the shutter clicks: in the selection of subject, angle, light, moment, and frame. The camera does not see; the photographer decides what the camera will see.\n\nThis reconceptualization did not come easily. It required the development of a new critical vocabulary — one that could articulate the distinctive contributions of photographic technique without borrowing awkwardly from painting. It also required the emergence of photographers who pushed against the medium's documentary tendencies: Stieglitz, Weston, Cartier-Bresson, and others who demonstrated that the decisive moment, the composed frame, and the quality of light could carry expressive weight equivalent to the brushstroke.\n\nToday the debate seems largely settled, though its residue persists in subtle ways — in the tendency to evaluate photographs primarily in terms of their subjects rather than their formal properties, and in the lingering assumption that digital manipulation makes photographs 'more' artistic because it resembles traditional medium intervention. This assumption inverts the logic: the photograph's artistic achievement lies in what the photographer saw and decided to capture, not in what was subsequently done to the image.",
+        question: "The author's primary argument in this passage is that:",
+        answers: [
+          "nineteenth-century critics were entirely correct that photography is not a genuine art form.",
+          "photography became an art form only after digital manipulation techniques were developed.",
+          "the artistic contribution in photography lies in pre-capture decisions, not in the mechanical act of recording.",
+          "photographers like Stieglitz and Weston are the greatest artists of the twentieth century."
+        ],
+        correct: 2,
+        feedback: [
+          "The author explicitly says 'these critics were not simply wrong — they identified something real' before arguing they 'failed to grasp' the actual nature of photographic creativity. The author rejects the critic's conclusion while crediting their intuition.",
+          "The author argues in the last paragraph that digital manipulation is a misunderstanding — it 'inverts the logic.' The artistic achievement exists in seeing and capturing, not in post-processing.",
+          "Correct. The author's core claim is stated in the first paragraph: creative intervention 'happens before the shutter clicks.' The last paragraph reinforces this by critiquing those who think digital manipulation is what makes a photograph artistic.",
+          "These photographers are given as examples supporting the argument — they are not the subject of the passage, and no comparative greatness claim is made."
+        ]
+      },
+      {
+        type: "arg",
+        passage: "The debate over whether photography is an art form has a long and somewhat embarrassing history. For much of the nineteenth century, critics dismissed the photograph as a mechanical record rather than a creative act, arguing that without the transformative intervention of the artist's hand, the camera produced mere documentation rather than art. These critics were not simply wrong — they identified something real about the ontological difference between traditional and photographic representation. What they failed to grasp was that the creative intervention in photography happens before the shutter clicks: in the selection of subject, angle, light, moment, and frame. The camera does not see; the photographer decides what the camera will see.\n\nThis reconceptualization did not come easily. It required the development of a new critical vocabulary — one that could articulate the distinctive contributions of photographic technique without borrowing awkwardly from painting. It also required the emergence of photographers who pushed against the medium's documentary tendencies: Stieglitz, Weston, Cartier-Bresson, and others who demonstrated that the decisive moment, the composed frame, and the quality of light could carry expressive weight equivalent to the brushstroke.\n\nToday the debate seems largely settled, though its residue persists in subtle ways — in the tendency to evaluate photographs primarily in terms of their subjects rather than their formal properties, and in the lingering assumption that digital manipulation makes photographs 'more' artistic because it resembles traditional medium intervention. This assumption inverts the logic: the photograph's artistic achievement lies in what the photographer saw and decided to capture, not in what was subsequently done to the image.",
+        question: "The second paragraph primarily serves to:",
+        answers: [
+          "introduce a counterargument that the author will refute in the third paragraph.",
+          "explain how the reconceptualization of photography as art was historically achieved.",
+          "provide a biography of major twentieth-century photographers.",
+          "argue that photography required digital tools to become recognized as an art form."
+        ],
+        correct: 1,
+        feedback: [
+          "The second paragraph doesn't introduce a counterargument — it continues and develops the author's argument by describing the historical process of recognition.",
+          "Correct. The paragraph opens 'This reconceptualization did not come easily' and then describes the two historical developments that enabled it: a new critical vocabulary and photographers who demonstrated expressive power. It explains how, not just that.",
+          "The photographers are mentioned as evidence for the argument — they are not the subject. Biographical information is not provided.",
+          "Digital tools appear only in the third paragraph, and the author uses them to critique a misunderstanding, not to mark photography's artistic recognition."
+        ]
+      },
+      {
+        type: "infer",
+        passage: "The debate over whether photography is an art form has a long and somewhat embarrassing history. For much of the nineteenth century, critics dismissed the photograph as a mechanical record rather than a creative act, arguing that without the transformative intervention of the artist's hand, the camera produced mere documentation rather than art. These critics were not simply wrong — they identified something real about the ontological difference between traditional and photographic representation. What they failed to grasp was that the creative intervention in photography happens before the shutter clicks: in the selection of subject, angle, light, moment, and frame. The camera does not see; the photographer decides what the camera will see.\n\nThis reconceptualization did not come easily. It required the development of a new critical vocabulary — one that could articulate the distinctive contributions of photographic technique without borrowing awkwardly from painting. It also required the emergence of photographers who pushed against the medium's documentary tendencies: Stieglitz, Weston, Cartier-Bresson, and others who demonstrated that the decisive moment, the composed frame, and the quality of light could carry expressive weight equivalent to the brushstroke.\n\nToday the debate seems largely settled, though its residue persists in subtle ways — in the tendency to evaluate photographs primarily in terms of their subjects rather than their formal properties, and in the lingering assumption that digital manipulation makes photographs 'more' artistic because it resembles traditional medium intervention. This assumption inverts the logic: the photograph's artistic achievement lies in what the photographer saw and decided to capture, not in what was subsequently done to the image.",
+        question: "Based on the passage, the author would most likely agree that a heavily digitally altered photograph:",
+        answers: [
+          "is more artistic than an unaltered photograph because digital manipulation involves the artist's hand.",
+          "may or may not be more artistic than an unaltered photograph, depending on the quality of the pre-capture decisions.",
+          "is never a genuine work of art because it has been removed from photographic truth.",
+          "represents the future of photography as an art form."
+        ],
+        correct: 1,
+        feedback: [
+          "The author explicitly argues this view 'inverts the logic.' This is the trap answer — it represents the mistaken assumption the author is critiquing.",
+          "Correct. The author's position is that artistic achievement lies in 'what the photographer saw and decided to capture.' Digital alteration is neither definitively more nor less artistic — what matters is the pre-capture vision. A heavily altered image could be great art if built on great seeing; an unaltered one could be, too.",
+          "The author doesn't make claims about 'photographic truth' or argue that alteration disqualifies images as art. This introduces a concept not in the passage.",
+          "The author doesn't make future predictions — and their logic would actually suggest the opposite concern about digital manipulation."
+        ]
+      }
+    ]
+  }
+];
+
+// ===== DRILL LOGIC =====
+let currentDrill = null;
+let currentQ = 0;
+let drillScore = 0;
+let answered = false;
+
+function loadDrill(index) {
+  document.querySelectorAll('.drill-item').forEach(d => d.classList.remove('active-drill'));
+  document.querySelectorAll('.drill-item')[index].classList.add('active-drill');
+
+  currentDrill = drills[index];
+  currentQ = 0;
+  drillScore = 0;
+  answered = false;
+
+  document.getElementById('drill-area').style.display = 'block';
+  document.getElementById('drill-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('drill-name').textContent = currentDrill.name;
+
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = currentDrill.questions[currentQ];
+  const total = currentDrill.questions.length;
+  answered = false;
+
+  document.getElementById('drill-progress-label').textContent = `${currentQ + 1} / ${total}`;
+  document.getElementById('drill-progress-fill').style.width = `${((currentQ) / total) * 100}%`;
+
+  const typeLabels = { comp: 'Comprehension', tone: 'Tone & Attitude', arg: 'Argument Structure', infer: 'Inference', trap: 'Trap Detection' };
+  const typeClasses = { comp: 'qtype-comp', tone: 'qtype-tone', arg: 'qtype-arg', infer: 'qtype-infer', trap: 'qtype-main' };
+
+  let html = `<span class="qtype-badge ${typeClasses[q.type] || 'qtype-comp'}">${typeLabels[q.type] || 'Comprehension'}</span>`;
+
+  if (q.passage) {
+    html += `<div class="passage-box"><div class="passage-label">Passage</div>${q.passage.replace(/\n/g,'<br><br>')}</div>`;
+  }
+
+  html += `<div class="question-text">${q.question}</div>`;
+  html += `<div class="answer-options" id="options">`;
+  const letters = ['A', 'B', 'C', 'D'];
+  q.answers.forEach((a, i) => {
+    html += `<button class="answer-btn" onclick="selectAnswer(${i})">${letters[i]}. ${a}</button>`;
+  });
+  html += `</div>`;
+  html += `<div class="feedback-box" id="feedback-box"><div class="feedback-label" id="feedback-label"></div><p id="feedback-text"></p></div>`;
+  html += `<div class="btn-row" id="next-btn-row" style="display:none"><button class="btn" onclick="nextQuestion()">Next Question</button></div>`;
+
+  document.getElementById('drill-content').innerHTML = html;
+}
+
+function selectAnswer(index) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentDrill.questions[currentQ];
+  const btns = document.querySelectorAll('.answer-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const isCorrect = index === q.correct;
+  if (isCorrect) drillScore++;
+
+  btns[index].classList.add(isCorrect ? 'selected-correct' : 'selected-incorrect');
+  if (!isCorrect) btns[q.correct].classList.add('reveal-correct');
+
+  const fb = document.getElementById('feedback-box');
+  const fl = document.getElementById('feedback-label');
+  const ft = document.getElementById('feedback-text');
+
+  fb.className = 'feedback-box ' + (isCorrect ? 'correct' : 'incorrect');
+  fb.style.display = 'block';
+  fl.className = 'feedback-label ' + (isCorrect ? 'correct' : 'incorrect');
+  fl.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+  ft.textContent = q.feedback[index];
+
+  document.getElementById('next-btn-row').style.display = 'flex';
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= currentDrill.questions.length) {
+    showDrillScore();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showDrillScore() {
+  const total = currentDrill.questions.length;
+  const pct = Math.round((drillScore / total) * 100);
+  let message = pct === 100 ? "Perfect score! You're building serious CARS skills." :
+                pct >= 75 ? "Strong performance. Review the questions you missed carefully." :
+                pct >= 50 ? "Good effort. Focus on the explanations for wrong answers — they reveal your reasoning patterns." :
+                "Keep drilling. CARS skills build through repetition. Review each explanation and try again.";
+
+  document.getElementById('drill-content').innerHTML = `
+    <div class="score-box">
+      <div class="score-label">Drill Complete</div>
+      <div class="score-num">${drillScore}/${total}</div>
+      <div class="score-label">${pct}% correct</div>
+      <div class="score-message">${message}</div>
+    </div>
+    <div class="btn-row" style="margin-top:16px">
+      <button class="btn" onclick="loadDrill(${drills.indexOf(currentDrill)})">Retry This Drill</button>
+      <button class="btn outline" onclick="document.getElementById('drill-area').style.display='none'">Back to Drill List</button>
+    </div>
+  `;
+  document.getElementById('drill-progress-fill').style.width = '100%';
+  document.getElementById('drill-progress-label').textContent = `${total} / ${total}`;
+}
+
+// ===== TIMED PRACTICE =====
+const timedPassages = [
+  {
+    title: "Passage A: Philosophy of Art",
+    text: "What distinguishes art from craft is not skill, which both require, but intention and meaning. The craftsperson aims to produce a functional object that meets an external standard; the artist aims to produce an object that embodies a vision. Yet this distinction, appealing as it is in the abstract, dissolves under scrutiny when applied to actual works and their histories. Medieval cathedral builders pursued religious truth through technical mastery — was this craft or art? Japanese ceramicists have elevated pottery to philosophical practice — how do we classify their bowls? The distinction may tell us more about the cultural assumptions of those who draw it than about any intrinsic difference in the objects themselves.\n\nModern aesthetics has generally responded to this difficulty by shifting the question from the object to the context of reception. What makes something art, on this account, is not its properties but its placement within what philosopher Arthur Danto called the 'artworld' — the institutional framework of galleries, critics, historians, and educated audiences that confers art status. Duchamp's readymades exploited precisely this mechanism: by placing a urinal in a gallery with a title, he demonstrated that the artworld's frame, not the object's properties, was doing the classificatory work.\n\nThis institutional theory has genuine explanatory power, but it carries uncomfortable implications. If anything can be art given the right institutional context, then 'art' becomes an honorific rather than a descriptive category — and a suspiciously circular one. The artworld decides what is art; art is what the artworld decides. Critics have argued that this collapses the distinction between good art and bad art, authentic art and empty provocation. The institutional theory, in making art democratically available to any object, may have drained the concept of any critical purchase.",
+    questions: [
+      { q: "The author's central purpose in this passage is to:", type: "comp",
+        answers: ["celebrate Duchamp's artistic innovations.", "examine and critically evaluate attempts to define what distinguishes art.", "argue that all objects can be considered art given the right context.", "defend the traditional distinction between art and craft."],
+        correct: 1,
+        feedback: ["Duchamp is used as an example to illustrate the institutional theory, not celebrated. The passage doesn't endorse this view.", "Correct. The passage moves through the art/craft distinction (first paragraph), the institutional theory (second), and then a critique of that theory (third). The author is examining and evaluating definitions of art.", "This is the institutional theory position that the author introduces and then critiques. The author doesn't endorse it.", "The author explicitly says the art/craft distinction 'dissolves under scrutiny.' This is the opposite of defending it."] },
+      { q: "The author uses the examples of medieval cathedral builders and Japanese ceramicists primarily to:", type: "arg",
+        answers: ["demonstrate that Eastern and Western art traditions are fundamentally similar.", "show that some works of art require greater skill than others.", "illustrate how actual historical cases challenge the intuitive distinction between art and craft.", "argue that religious and secular art should be evaluated by different standards."],
+        correct: 2,
+        feedback: ["Cross-cultural comparison is not the point — the examples are chosen because they challenge the art/craft distinction, not to show similarity.", "Skill levels are not being compared here. The examples are about classification, not quality.", "Correct. The author introduces the art/craft distinction as appealing in the abstract, then uses these examples to show it 'dissolves under scrutiny.' They are counterexamples to the simple distinction.", "Religious vs. secular evaluation is not mentioned anywhere in the passage. This introduces an outside framework."] },
+      { q: "Based on the passage, which of the following would the author most likely view as a weakness of the institutional theory of art?", type: "infer",
+        answers: ["It fails to account for objects placed in galleries by professional artists.", "It makes it impossible to distinguish authentic art from empty provocation in any principled way.", "It applies only to Western art traditions and ignores non-Western practices.", "It relies too heavily on the opinions of individual critics rather than on objective standards."],
+        correct: 1,
+        feedback: ["The institutional theory specifically addresses objects in galleries — this is where its strength lies.", "Correct. The author's critique is that the institutional theory 'collapses the distinction between good art and bad art, authentic art and empty provocation.' This matches exactly.", "The passage doesn't raise the question of geographic or cultural scope. This is outside the argument.", "The author critiques the theory for being circular (artworld defines art defines artworld), not for relying on individual critics."] }
+    ]
+  },
+  {
+    title: "Passage B: Social History",
+    text: "The concept of childhood as a protected, distinct phase of life, characterized by innocence, play, and freedom from adult responsibility, is a historical invention — one that emerged with industrialization, middle-class prosperity, and the gradual exclusion of children from the labor market. Philippe Ariès famously argued that medieval society lacked any concept of childhood; children were treated as small adults, integrated into adult life as soon as they were physically capable of participating in it. Later historians have challenged the specifics of Ariès' account — medieval texts and artwork do reveal some awareness of children's distinctive needs — but his central insight stands: the childhood we take for granted is culturally and historically specific.\n\nThe extension of childhood has not been uniformly experienced across social classes. Working-class children continued to labor in factories and fields well into the nineteenth and twentieth centuries, excluded from the protected childhood that the middle and upper classes increasingly took as a developmental necessity. Child labor legislation extended middle-class childhood norms to the population at large, but this history reminds us that the 'natural' stages of human development are partly social constructs shaped by economic conditions and class interests.\n\nContemporary debates about children and technology replay this history in updated form. Anxieties about children's exposure to digital media, about the erosion of unstructured play, and about premature exposure to adult knowledge and concerns are recognizably continuous with earlier anxieties about children's exposure to factories, to adult labor, and to the 'premature' responsibilities that economic necessity imposed. In each case, what is being defended is a particular model of childhood — one that is culturally specific, historically recent, and associated with the circumstances of relatively privileged social groups.",
+    questions: [
+      { q: "The author's main argument in this passage is that:", type: "comp",
+        answers: ["medieval children were treated cruelly and their needs were ignored.", "contemporary anxieties about technology are unfounded and should be dismissed.", "the idea of childhood as a protected developmental phase is historically and culturally constructed rather than natural.", "child labor legislation was the most important social reform of the nineteenth century."],
+        correct: 2,
+        feedback: ["The author notes that medieval children were 'integrated into adult life' but does not characterize this as cruelty — that is an evaluative addition the passage doesn't make.", "The author draws a parallel between technology anxieties and earlier anxieties, but does not dismiss them as unfounded. The author is contextualizing, not dismissing.", "Correct. This is the consistent thread: childhood as 'historically specific,' shaped by economic conditions, a 'cultural construct' — the passage argues this throughout and concludes with it.", "Child labor legislation is mentioned as one development in this history, not the most important reform. The passage is about childhood as a concept, not legislative history."] },
+      { q: "The author refers to Philippe Ariès' work primarily in order to:", type: "arg",
+        answers: ["provide an authoritative source who fully proves the author's argument.", "introduce a historical claim that the author will then complicate and partially defend.", "argue that all historians who study childhood have reached the same conclusions.", "demonstrate that the history of childhood is a minor and underexplored field."],
+        correct: 1,
+        feedback: ["The author notes that Ariès' specific claims have been challenged by later historians, so Ariès is not presented as fully proving anything.", "Correct. The author introduces Ariès, acknowledges that 'later historians have challenged the specifics,' but maintains that 'his central insight stands.' This is the classic move of partial endorsement after complication.", "The author explicitly notes that later historians challenged Ariès — this is the opposite of arguing all historians agree.", "The passage treats childhood history as significant and relevant to contemporary debates. Nothing suggests it is minor or underexplored."] },
+      { q: "Based on the passage, the author would most likely view current anxieties about children and digital technology as:", type: "infer",
+        answers: ["unique and unprecedented, unlike any previous anxieties about children.", "reflecting a historically specific and class-inflected model of childhood rather than universal developmental truths.", "proof that digital technology is genuinely harmful to children's development.", "less serious than earlier concerns about child labor in factories."],
+        correct: 1,
+        feedback: ["The author explicitly says these anxieties are 'recognizably continuous with earlier anxieties.' They are not unique or unprecedented.", "Correct. The author concludes that contemporary anxieties are defending 'a particular model of childhood — one that is culturally specific, historically recent, and associated with the circumstances of relatively privileged social groups.'", "The author contextualizes the anxieties without validating or dismissing them. No claim is made about whether digital technology is actually harmful.", "No comparative severity is suggested. The author draws a structural parallel, not a hierarchy of concern."] }
+    ]
+  },
+  {
+    title: "Passage C: Ethics & Justice",
+    text: "The liberal tradition's handling of the concept of desert has always been uneasy. On one hand, liberal societies celebrate meritocracy — the idea that rewards should track individual contribution, effort, and achievement. On the other hand, liberal philosophy, following Rawls, has been deeply skeptical of claims to desert: if an individual's talents, dispositions toward effort, and circumstances of birth are all outcomes of factors beyond their control, it is difficult to justify the claim that they 'deserve' the advantages those factors produce. The talented and hardworking, on this view, are lucky rather than deserving.\n\nThis philosophical difficulty does not seem to trouble ordinary moral intuitions, which remain robustly desert-oriented. Most people believe, with considerable conviction, that those who work harder should earn more, that those who cause harm should be punished, and that advantages obtained through fraud or force are illegitimate in ways that advantages obtained through effort are not. These intuitions persist even when their philosophical foundations are challenged.\n\nThe persistence of desert intuitions in the face of their philosophical undercutting suggests one of two things: either ordinary people are simply wrong in their moral psychology, victims of an illusion that more careful reasoning would dispel, or the philosophical arguments against desert, however logically compelling, miss something important about how desert functions in moral life. I am inclined toward the latter view. Desert claims may be philosophically difficult to ground without appealing to a kind of libertarian free will that most philosophers reject, yet they perform genuine moral work: they structure motivation, enable accountability, and make social cooperation possible in ways that a purely luck-egalitarian framework cannot fully replicate.",
+    questions: [
+      { q: "The author's position on the concept of desert is best described as:", type: "tone",
+        answers: ["complete agreement with Rawls's critique of desert claims.", "dismissal of ordinary moral intuitions as philosophically naive.", "qualified defense of desert as morally functional despite its philosophical difficulties.", "rejection of liberal philosophy in favor of traditional meritocratic values."],
+        correct: 2,
+        feedback: ["The author acknowledges the force of Rawls's argument but explicitly says 'I am inclined toward the latter view' — defending the practical value of desert claims.", "The author argues that the persistence of desert intuitions may reflect their genuine moral function, not mere error. This is the opposite of dismissal.", "Correct. The author acknowledges desert is 'philosophically difficult to ground' while arguing it 'performs genuine moral work.' This is a qualified, functional defense.", "The author doesn't reject liberal philosophy — they engage seriously with it and try to preserve something from ordinary moral experience within a liberal framework."] },
+      { q: "The primary function of the second paragraph is to:", type: "arg",
+        answers: ["provide statistical evidence that most people hold desert-based moral views.", "introduce the philosophical view that will be defended in the third paragraph.", "establish that ordinary moral intuitions about desert are both persistent and in tension with philosophical skepticism.", "argue that ordinary people are more reliable moral reasoners than philosophers."],
+        correct: 2,
+        feedback: ["No statistical evidence is provided — the author makes a descriptive claim about 'most people' without citing data.", "The philosophical view being defended is introduced in the third paragraph. The second paragraph sets up the tension between ordinary intuition and philosophy.", "Correct. The second paragraph establishes that desert intuitions are 'robust' and persistent — which creates the tension ('philosophical difficulty does not seem to trouble ordinary moral intuitions') that the third paragraph then attempts to resolve.", "The author doesn't argue ordinary people are better moral reasoners — they present their persistence as a datum that requires explanation, not as evidence of their reliability."] },
+      { q: "Based on the passage, the author would most likely agree with which of the following statements?", type: "infer",
+        answers: ["People who work hard always deserve greater rewards than those who do not.", "The fact that talents and dispositions are shaped by luck proves that desert claims are entirely without merit.", "Desert-based moral frameworks should be abandoned because they cannot be philosophically justified.", "Desert claims may lack a fully satisfying philosophical foundation but still serve important social and moral functions."],
+        correct: 3,
+        feedback: ["'Always' is too strong, and the passage acknowledges the luck argument that complicates such claims. The author doesn't assert this without qualification.", "This is the Rawlsian philosophical argument that the author engages with but does not fully endorse. The author argues this view 'misses something important.'", "The author argues the opposite — that desert claims 'perform genuine moral work' and should not simply be abandoned because of philosophical difficulties.", "Correct. This directly paraphrases the author's conclusion: desert is 'philosophically difficult to ground' but 'performs genuine moral work' structuring motivation and enabling cooperation."] }
+    ]
+  }
+];
+
+let selectedTimedPassage = 0;
+let timedInterval = null;
+let timedSecondsLeft = 600;
+let timedAnswers = {};
+
+function selectTimedPassage(index, el) {
+  selectedTimedPassage = index;
+  document.querySelectorAll('.passage-choice').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function startTimedPassage() {
+  document.getElementById('timed-setup-screen').style.display = 'none';
+  document.getElementById('timed-active-screen').style.display = 'block';
+  timedAnswers = {};
+  timedSecondsLeft = 600;
+
+  const p = timedPassages[selectedTimedPassage];
+  document.getElementById('timed-passage-content').innerHTML = `
+    <div class="card">
+      <h3>${p.title}</h3>
+      <div class="passage-box">${p.text.replace(/\n/g, '<br><br>')}</div>
+    </div>
+  `;
+
+  let qHtml = '';
+  const letters = ['A','B','C','D'];
+  p.questions.forEach((q, qi) => {
+    qHtml += `<div class="card" id="tq-${qi}">
+      <div class="question-text">Question ${qi+1}: ${q.q}</div>
+      <div class="answer-options">`;
+    q.answers.forEach((a, ai) => {
+      qHtml += `<button class="answer-btn" id="tq-${qi}-${ai}" onclick="selectTimedAnswer(${qi},${ai})">${letters[ai]}. ${a}</button>`;
+    });
+    qHtml += `</div></div>`;
+  });
+  document.getElementById('timed-questions-content').innerHTML = qHtml;
+  document.getElementById('timed-submit-btn').style.display = 'inline-block';
+
+  updateTimedDisplay();
+  timedInterval = setInterval(() => {
+    timedSecondsLeft--;
+    updateTimedDisplay();
+    if (timedSecondsLeft <= 0) {
+      clearInterval(timedInterval);
+      submitTimedPassage(true);
+    }
+  }, 1000);
+}
+
+function updateTimedDisplay() {
+  const m = Math.floor(timedSecondsLeft / 60);
+  const s = timedSecondsLeft % 60;
+  const el = document.getElementById('timed-timer');
+  el.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  el.className = 'timer-display' + (timedSecondsLeft <= 60 ? ' urgent' : '');
+}
+
+function selectTimedAnswer(qi, ai) {
+  const p = timedPassages[selectedTimedPassage];
+  const q = p.questions[qi];
+  // Clear previous selection in this question
+  q.answers.forEach((_, i) => {
+    const b = document.getElementById(`tq-${qi}-${i}`);
+    b.classList.remove('selected-correct','selected-incorrect');
+    b.style.borderColor = '';
+    b.style.background = '';
+  });
+  timedAnswers[qi] = ai;
+  document.getElementById(`tq-${qi}-${ai}`).style.borderColor = 'var(--accent2)';
+  document.getElementById(`tq-${qi}-${ai}`).style.background = '#f0f5ff';
+}
+
+function submitTimedPassage(timeUp = false) {
+  clearInterval(timedInterval);
+  const p = timedPassages[selectedTimedPassage];
+  let score = 0;
+  const total = p.questions.length;
+  let reviewHtml = '';
+  const letters = ['A','B','C','D'];
+
+  p.questions.forEach((q, qi) => {
+    const chosen = timedAnswers[qi];
+    const correct = q.correct;
+    const isCorrect = chosen === correct;
+    if (isCorrect) score++;
+
+    reviewHtml += `<div class="card">
+      <div class="question-text">Question ${qi+1}: ${q.q}</div>`;
+    q.answers.forEach((a, ai) => {
+      let cls = '';
+      if (ai === correct) cls = 'selected-correct';
+      else if (ai === chosen && !isCorrect) cls = 'selected-incorrect';
+      reviewHtml += `<div class="answer-btn ${cls}" style="pointer-events:none">${letters[ai]}. ${a}</div>`;
+    });
+    reviewHtml += `<div class="feedback-box ${isCorrect ? 'correct' : 'incorrect'}" style="display:block;margin-top:12px">
+      <div class="feedback-label ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct' : chosen === undefined ? '— Not Answered' : '✗ Incorrect'}</div>
+      <p>${chosen !== undefined ? q.feedback[chosen] : q.feedback[correct]}</p>
+    </div></div>`;
+  });
+
+  document.getElementById('timed-passage-content').style.display = 'none';
+  document.getElementById('timed-questions-content').style.display = 'none';
+  document.getElementById('timed-submit-btn').style.display = 'none';
+  document.getElementById('timed-timer').style.display = 'none';
+
+  const pct = Math.round((score/total)*100);
+  const timeUsed = 600 - timedSecondsLeft;
+  const mUsed = Math.floor(timeUsed/60);
+  const sUsed = timeUsed % 60;
+
+  document.getElementById('timed-results').innerHTML = `
+    <div class="score-box">
+      <div class="score-label">${timeUp ? 'Time Expired — ' : ''}Passage Complete</div>
+      <div class="score-num">${score}/${total}</div>
+      <div class="score-label">${pct}% · Time used: ${mUsed}:${sUsed.toString().padStart(2,'0')}</div>
+      <div class="score-message">${pct===100?'Perfect! Excellent pacing and accuracy.':pct>=66?'Good work. Review the explanations for wrong answers.':'Keep practicing. Focus on identifying question types before answering.'}</div>
+    </div>
+    <h3 style="font-family:'Playfair Display',serif;margin:24px 0 16px;">Detailed Review</h3>
+    ${reviewHtml}
+    <div class="btn-row" style="margin-top:20px">
+      <button class="btn" onclick="resetTimed()">Try Another Passage</button>
+    </div>
+  `;
+  document.getElementById('timed-results').style.display = 'block';
+}
+
+function resetTimed() {
+  document.getElementById('timed-setup-screen').style.display = 'block';
+  document.getElementById('timed-active-screen').style.display = 'none';
+  document.getElementById('timed-passage-content').style.display = '';
+  document.getElementById('timed-questions-content').style.display = '';
+  document.getElementById('timed-results').style.display = 'none';
+  document.getElementById('timed-timer').style.display = '';
+  timedAnswers = {};
+}
+</script>
+</body>
+</html>
