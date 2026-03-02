@@ -495,9 +495,40 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 .qtype-tone { background: #ede8fd; color: #6c3fc5; }
 .qtype-arg { background: #e0f5f0; color: var(--teal); }
 .qtype-main { background: #ffe8f8; color: #8b1a5c; }
+
+/* ─── WCAG 2.1 AA: Visible focus indicators ─── */
+:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+.tab-btn:focus-visible, .nav-btn:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+/* ─── Skip link ─── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: #005fcc;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <div class="hero">
   <div class="hero-content">
@@ -513,12 +544,12 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 </div>
 
 <nav class="nav-bar">
-  <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
-  <button class="nav-btn" onclick="showSection('strategies')">Strategies</button>
-  <button class="nav-btn" onclick="showSection('qtypes')">Question Types</button>
-  <button class="nav-btn" onclick="showSection('mistakes')">Trap Answers</button>
-  <button class="nav-btn" onclick="showSection('drills')">Drills</button>
-  <button class="nav-btn" onclick="showSection('timed')">Timed Practice</button>
+  <button role="tab" aria-selected="true" aria-controls="sec-overview" class="nav-btn active" onclick="showSection('overview')">Overview</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-strategies" class="nav-btn" onclick="showSection('strategies')">Strategies</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-qtypes" class="nav-btn" onclick="showSection('qtypes')">Question Types</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-mistakes" class="nav-btn" onclick="showSection('mistakes')">Trap Answers</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-drills" class="nav-btn" onclick="showSection('drills')">Drills</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-timed" class="nav-btn" onclick="showSection('timed')">Timed Practice</button>
 </nav>
 
 <main>
