@@ -495,9 +495,40 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 .qtype-tone { background: #ede8fd; color: #6c3fc5; }
 .qtype-arg { background: #e0f5f0; color: var(--teal); }
 .qtype-main { background: #ffe8f8; color: #8b1a5c; }
+
+/* ─── WCAG 2.1 AA: Visible focus indicators ─── */
+:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+.tab-btn:focus-visible, .nav-btn:focus-visible {
+  outline: 3px solid #005fcc !important;
+  outline-offset: 2px !important;
+}
+/* ─── Skip link ─── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: #005fcc;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <div class="hero">
   <div class="hero-content">
@@ -513,12 +544,12 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 </div>
 
 <nav class="nav-bar">
-  <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
-  <button class="nav-btn" onclick="showSection('strategies')">Strategies</button>
-  <button class="nav-btn" onclick="showSection('qtypes')">Question Types</button>
-  <button class="nav-btn" onclick="showSection('mistakes')">Trap Answers</button>
-  <button class="nav-btn" onclick="showSection('drills')">Drills</button>
-  <button class="nav-btn" onclick="showSection('timed')">Timed Practice</button>
+  <button role="tab" aria-selected="true" aria-controls="sec-overview" class="nav-btn active" onclick="showSection('overview')">Overview</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-strategies" class="nav-btn" onclick="showSection('strategies')">Strategies</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-qtypes" class="nav-btn" onclick="showSection('qtypes')">Question Types</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-mistakes" class="nav-btn" onclick="showSection('mistakes')">Trap Answers</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-drills" class="nav-btn" onclick="showSection('drills')">Drills</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-timed" class="nav-btn" onclick="showSection('timed')">Timed Practice</button>
 </nav>
 
 <main>
@@ -529,7 +560,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   <div class="section-sub">Understanding the game before you play it</div>
 
   <div class="card">
-    <h3><span class="icon icon-blue">📖</span> The CARS Section at a Glance</h3>
+    <h3><span class="icon icon-blue"><span aria-hidden="true">📖</span></span> The CARS Section at a Glance</h3>
     <p>The Critical Analysis and Reasoning Skills section tests your ability to comprehend, analyze, and reason about dense passages from the humanities and social sciences. You get <strong>9 passages and 53 questions in 90 minutes</strong> — roughly 10 minutes per passage. There is no outside knowledge required. Every answer is in or supported by the passage.</p>
     <p>Passages come from fields like philosophy, history, literature, art criticism, sociology, and ethics. They are often dense, opinion-driven, and deliberately complex.</p>
   </div>
@@ -540,7 +571,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   </div>
 
   <div class="card">
-    <h3><span class="icon icon-gold">🧠</span> The Four Reasoning Foundations</h3>
+    <h3><span class="icon icon-gold"><span aria-hidden="true">🧠</span></span> The Four Reasoning Foundations</h3>
     <p>AAMC categorizes CARS questions into four foundations of reasoning:</p>
     <ul>
       <li><strong>Foundations of Comprehension (~30%):</strong> What did the author literally say? Main idea, vocabulary in context, factual recall from the passage.</li>
@@ -550,7 +581,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   </div>
 
   <div class="card">
-    <h3><span class="icon icon-teal">⏱️</span> The Time Challenge</h3>
+    <h3><span class="icon icon-teal"><span aria-hidden="true">⏱️</span></span> The Time Challenge</h3>
     <p>At roughly <strong>10 minutes per passage</strong>, you have about 3–4 minutes to read and 1 minute per question. Most students fail CARS not because they don't understand the passage, but because they spend too long reading and not enough time reasoning on questions.</p>
     <p>The goal of these drills is to build automatic reading instincts so that comprehension requires less active effort, freeing your cognitive bandwidth for reasoning and answer evaluation.</p>
   </div>
@@ -594,7 +625,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   </div>
 
   <div class="card">
-    <h3><span class="icon icon-red">🔑</span> The Author's Attitude Is Everything</h3>
+    <h3><span class="icon icon-red"><span aria-hidden="true">🔑</span></span> The Author's Attitude Is Everything</h3>
     <p>Roughly 40–50% of CARS questions ask you to reason about the author's perspective in some way — main argument, attitude, likely agreement with a new claim. Build the habit of identifying:</p>
     <ul>
       <li><strong>What does the author believe?</strong> (Their central claim)</li>
@@ -612,7 +643,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   <div class="section-sub">Know what each question type is really asking</div>
 
   <div class="card">
-    <h3><span class="icon icon-blue">💡</span> Main Idea / Central Thesis</h3>
+    <h3><span class="icon icon-blue"><span aria-hidden="true">💡</span></span> Main Idea / Central Thesis</h3>
     <span class="qtype-badge qtype-main">Foundation: Comprehension</span>
     <p>These ask: "What is this passage primarily about?" or "Which best summarizes the author's central argument?"</p>
     <p><strong>The trap:</strong> Answers that are true but too narrow (just about one paragraph) or too broad (beyond what the passage actually argues).</p>
@@ -620,7 +651,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   </div>
 
   <div class="card">
-    <h3><span class="icon icon-blue">🔍</span> Tone &amp; Attitude</h3>
+    <h3><span class="icon icon-blue"><span aria-hidden="true">🔍</span></span> Tone &amp; Attitude</h3>
     <span class="qtype-badge qtype-tone">Foundation: Comprehension</span>
     <p>These ask: "What is the author's attitude toward X?" or "How does the author view this perspective?"</p>
     <p><strong>The trap:</strong> Picking an extreme tone when the author is measured, or vice versa. Also, confusing the author's own view with a position they are describing but not endorsing.</p>
@@ -628,7 +659,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   </div>
 
   <div class="card">
-    <h3><span class="icon icon-gold">🏗️</span> Argument Structure</h3>
+    <h3><span class="icon icon-gold"><span aria-hidden="true">🏗️</span></span> Argument Structure</h3>
     <span class="qtype-badge qtype-arg">Foundation: Reasoning Within Text</span>
     <p>These ask: "What is the function of this paragraph?" or "How does the example in paragraph 3 support the author's argument?"</p>
     <p><strong>The trap:</strong> Describing what the paragraph says (its content) rather than what it does (its function).</p>
@@ -636,7 +667,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   </div>
 
   <div class="card">
-    <h3><span class="icon icon-teal">🔮</span> Inference &amp; Application</h3>
+    <h3><span class="icon icon-teal"><span aria-hidden="true">🔮</span></span> Inference &amp; Application</h3>
     <span class="qtype-badge qtype-infer">Foundation: Reasoning Beyond Text</span>
     <p>These ask: "Which of the following would the author most likely agree with?" or "How would the author respond to this new claim?"</p>
     <p><strong>The trap:</strong> Picking answers that sound good or seem logical but aren't grounded in what the author actually argued. Outside reasoning kills here.</p>
@@ -650,37 +681,37 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   <div class="section-sub">The mistakes that separate 125s from 132s</div>
 
   <div class="mistake-card">
-    <h4>🎯 The "Too Extreme" Answer</h4>
+    <h4><span aria-hidden="true">🎯</span> The "Too Extreme" Answer</h4>
     <p>Authors of CARS passages almost always use measured, qualified language ("tends to," "may suggest," "often"). Trap answers use extreme language like "always," "never," "proves," or "completely eliminates."</p>
     <p class="fix">FIX: If an answer uses extreme language, verify the author actually used that level of certainty. Usually they didn't.</p>
   </div>
 
   <div class="mistake-card teal-border">
-    <h4>🌊 The "True But Wrong" Answer</h4>
+    <h4><span aria-hidden="true">🌊</span> The "True But Wrong" Answer</h4>
     <p>This is the most common wrong answer on CARS. The statement is true according to the passage — it's mentioned somewhere — but it doesn't answer the specific question asked. You feel good about it because it's "in there."</p>
     <p class="fix">FIX: Read the question stem carefully. Ask: "Is this answer actually addressing what was asked, not just something true about the passage?"</p>
   </div>
 
   <div class="mistake-card gold-border">
-    <h4>📚 The "Outside Knowledge" Trap</h4>
+    <h4><span aria-hidden="true">📚</span> The "Outside Knowledge" Trap</h4>
     <p>You bring in facts you know from biology, history, or other fields that the author never mentions. The passage is about art theory and you select an answer based on neuroscience you remember from other studying.</p>
     <p class="fix">FIX: CARS is a closed universe. If it's not in the passage, it doesn't exist for these questions. Be suspicious of any knowledge you're adding from outside.</p>
   </div>
 
   <div class="mistake-card">
-    <h4>🔄 The "Author vs. Other View" Confusion</h4>
+    <h4><span aria-hidden="true">🔄</span> The "Author vs. Other View" Confusion</h4>
     <p>CARS authors frequently describe viewpoints they disagree with before arguing against them. Students select answers that match the opposing view the author is critiquing, thinking it's the author's position.</p>
     <p class="fix">FIX: Track who is speaking at every moment. Flag phrases like "some argue," "critics claim," "others believe" — these are NOT the author's position.</p>
   </div>
 
   <div class="mistake-card teal-border">
-    <h4>🎪 The "Sounds Like The Right Topic" Answer</h4>
+    <h4><span aria-hidden="true">🎪</span> The "Sounds Like The Right Topic" Answer</h4>
     <p>This answer is about the right subject matter but gets the relationship wrong. The passage argues that art reflects economic conditions; the trap says art shapes economic conditions. Same topic, reversed logic.</p>
     <p class="fix">FIX: Don't just match topic words — verify the direction and nature of any claimed relationship matches the passage.</p>
   </div>
 
   <div class="mistake-card gold-border">
-    <h4>📏 The "Too Specific / Too General" Mismatch</h4>
+    <h4><span aria-hidden="true">📏</span> The "Too Specific / Too General" Mismatch</h4>
     <p>For main idea questions especially, one wrong answer will summarize only one section of the passage. Another will make a claim far broader than the author actually makes.</p>
     <p class="fix">FIX: The correct main idea answer must cover the whole passage without going beyond it. Test every candidate answer against the opening and closing paragraphs.</p>
   </div>
@@ -1240,7 +1271,7 @@ function selectAnswer(index) {
   fb.className = 'feedback-box ' + (isCorrect ? 'correct' : 'incorrect');
   fb.style.display = 'block';
   fl.className = 'feedback-label ' + (isCorrect ? 'correct' : 'incorrect');
-  fl.textContent = isCorrect ? '✓ Correct' : '✗ Incorrect';
+  fl.textContent = isCorrect ? '<span aria-hidden="true">✓</span> Correct' : '<span aria-hidden="true">✗</span> Incorrect';
   ft.textContent = q.feedback[index];
 
   document.getElementById('next-btn-row').style.display = 'flex';
@@ -1433,7 +1464,7 @@ function submitTimedPassage(timeUp = false) {
       reviewHtml += `<div class="answer-btn ${cls}" style="pointer-events:none">${letters[ai]}. ${a}</div>`;
     });
     reviewHtml += `<div class="feedback-box ${isCorrect ? 'correct' : 'incorrect'}" style="display:block;margin-top:12px">
-      <div class="feedback-label ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓ Correct' : chosen === undefined ? '— Not Answered' : '✗ Incorrect'}</div>
+      <div class="feedback-label ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '<span aria-hidden="true">✓</span> Correct' : chosen === undefined ? '— Not Answered' : '<span aria-hidden="true">✗</span> Incorrect'}</div>
       <p>${chosen !== undefined ? q.feedback[chosen] : q.feedback[correct]}</p>
     </div></div>`;
   });
@@ -1476,7 +1507,7 @@ function resetTimed() {
 </script>
 
   <div style="max-width: 800px; margin: 40px auto; padding: 20px 30px; background: #fff8e1; border-left: 4px solid #f9a825; border-radius: 8px; font-size: 14px; line-height: 1.6; color: #555;">
-  <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;">⚠️ Important Notice</div>
+  <div style="font-weight: bold; font-size: 15px; margin-bottom: 10px;"><span aria-hidden="true">⚠️</span> Important Notice</div>
   <p style="margin: 0 0 10px 0;">These study resources are provided free of charge for educational purposes only. They are intended as supplemental study aids and should not be used as a substitute for your course textbooks, lecture materials, or the guidance of your instructors.</p>
   <p style="margin: 0 0 10px 0;">While every effort has been made to ensure accuracy, this content may contain errors, omissions, or information that is out of date. Science is constantly evolving, and material that was accurate at the time of writing may no longer reflect current understanding. Always verify important facts, formulas, and concepts against your official course materials.</p>
   <p style="margin: 0 0 10px 0;">No guarantees are made regarding the completeness, accuracy, or reliability of any information presented on these sites. Use at your own discretion. If you spot an error, we appreciate you letting us know so it can be corrected.</p>
