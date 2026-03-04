@@ -501,7 +501,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   outline: 3px solid #005fcc !important;
   outline-offset: 2px !important;
 }
-.tab-btn:focus-visible, .nav-btn:focus-visible {
+.nav-btn:focus-visible {
   outline: 3px solid #005fcc !important;
   outline-offset: 2px !important;
 }
@@ -520,42 +520,120 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   z-index: 9999;
   transition: top 0.2s;
 }
-.skip-link:focus {
-  top: 0;
+.skip-link:focus { top: 0; }
+
+/* ─── WCAG 2.1 AA: Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .section { animation: none !important; }
+  .drill-item:hover { transform: none !important; }
+  .timer-display.urgent { animation: none !important; opacity: 1 !important; }
 }
+
+/* ─── Question type tip boxes ─── */
+.qtype-tip {
+  background: #f0f5ff;
+  border-left: 4px solid var(--accent2);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  font-size: 0.87rem;
+  color: #2a3a5a;
+  line-height: 1.6;
+}
+.qtype-tip strong { color: var(--accent2); }
+
+/* ─── Passage map helper ─── */
+.passage-map {
+  background: #fdf3dc;
+  border: 1px solid var(--warn-border);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-size: 0.87rem;
+  color: #5a4a2a;
+}
+.passage-map strong { color: #7a5a10; display: block; margin-bottom: 6px; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+
+/* ─── Feedback extra context ─── */
+.feedback-box .trap-label {
+  display: inline-block;
+  background: #ffe8e8;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 100px;
+  margin-bottom: 8px;
+}
+.feedback-box .why-label {
+  display: inline-block;
+  background: #e0f5e8;
+  color: var(--correct);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 100px;
+  margin-bottom: 8px;
+}
+
+/* ─── Score band ─── */
+.score-bands {
+  margin-top: 20px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 16px 20px;
+  text-align: left;
+}
+.score-bands h4 { font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 10px; }
+.band-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; font-size: 0.88rem; }
+.band-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.bd-great { background: #27ae60; }
+.bd-good  { background: #c9973a; }
+.bd-fair  { background: #e07030; }
+.bd-more  { background: #8b1a1a; }
 
 </style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
-
-<div class="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow">MCAT Prep — Critical Analysis & Reasoning Skills</div>
-    <h1>Master the <em>CARS</em> Section</h1>
-    <p>Build the CARS brain through targeted drills, proven strategies, and real passage practice with feedback on every question.</p>
-    <div class="hero-stats">
-      <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">Targeted Drills</span></div>
-      <div class="stat-item"><span class="stat-num">4</span><span class="stat-label">Question Types</span></div>
-      <div class="stat-item"><span class="stat-num">90</span><span class="stat-label">Min Real Exam</span></div>
+<header>
+  <div class="hero" role="banner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">MCAT Prep — Critical Analysis & Reasoning Skills</div>
+      <h1>Master the <em>CARS</em> Section</h1>
+      <p>Build the CARS brain through targeted drills, proven strategies, and real passage practice with feedback on every question.</p>
+      <div class="hero-stats" aria-label="Course statistics">
+        <div class="stat-item"><span class="stat-num" aria-label="8 targeted drills">8</span><span class="stat-label" aria-hidden="true">Targeted Drills</span></div>
+        <div class="stat-item"><span class="stat-num" aria-label="4 question types">4</span><span class="stat-label" aria-hidden="true">Question Types</span></div>
+        <div class="stat-item"><span class="stat-num" aria-label="90 minute real exam">90</span><span class="stat-label" aria-hidden="true">Min Real Exam</span></div>
+      </div>
     </div>
   </div>
-</div>
+</header>
 
-<nav class="nav-bar">
-  <button role="tab" aria-selected="true" aria-controls="sec-overview" class="nav-btn active" onclick="showSection('overview')">Overview</button>
-  <button role="tab" aria-selected="false" aria-controls="sec-strategies" class="nav-btn" onclick="showSection('strategies')">Strategies</button>
-  <button role="tab" aria-selected="false" aria-controls="sec-qtypes" class="nav-btn" onclick="showSection('qtypes')">Question Types</button>
-  <button role="tab" aria-selected="false" aria-controls="sec-mistakes" class="nav-btn" onclick="showSection('mistakes')">Trap Answers</button>
-  <button role="tab" aria-selected="false" aria-controls="sec-drills" class="nav-btn" onclick="showSection('drills')">Drills</button>
-  <button role="tab" aria-selected="false" aria-controls="sec-timed" class="nav-btn" onclick="showSection('timed')">Timed Practice</button>
+<nav class="nav-bar" aria-label="Main section navigation" role="tablist">
+  <button role="tab" aria-selected="true" aria-controls="sec-overview" id="tab-overview" class="nav-btn active" onclick="showSection('overview', this)">Overview</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-strategies" id="tab-strategies" class="nav-btn" onclick="showSection('strategies', this)">Strategies</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-qtypes" id="tab-qtypes" class="nav-btn" onclick="showSection('qtypes', this)">Question Types</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-mistakes" id="tab-mistakes" class="nav-btn" onclick="showSection('mistakes', this)">Trap Answers</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-drills" id="tab-drills" class="nav-btn" onclick="showSection('drills', this)">Drills</button>
+  <button role="tab" aria-selected="false" aria-controls="sec-timed" id="tab-timed" class="nav-btn" onclick="showSection('timed', this)">Timed Practice</button>
 </nav>
 
-<main>
+<main id="main-content">
 
 <!-- ===== OVERVIEW ===== -->
-<div id="overview" class="section active">
+<section id="overview" role="tabpanel" aria-labelledby="tab-overview" class="section active">
   <div class="section-title">What is CARS?</div>
   <div class="section-sub">Understanding the game before you play it</div>
 
@@ -588,7 +666,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 </div>
 
 <!-- ===== STRATEGIES ===== -->
-<div id="strategies" class="section">
+<section id="strategies" role="tabpanel" aria-labelledby="tab-strategies" class="section">
   <div class="section-title">Proven Reading Strategies</div>
   <div class="section-sub">Techniques that actually work on test day</div>
 
@@ -638,7 +716,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 </div>
 
 <!-- ===== QUESTION TYPES ===== -->
-<div id="qtypes" class="section">
+<section id="qtypes" role="tabpanel" aria-labelledby="tab-qtypes" class="section">
   <div class="section-title">The Four Question Types</div>
   <div class="section-sub">Know what each question type is really asking</div>
 
@@ -676,7 +754,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 </div>
 
 <!-- ===== MISTAKES / TRAPS ===== -->
-<div id="mistakes" class="section">
+<section id="mistakes" role="tabpanel" aria-labelledby="tab-mistakes" class="section">
   <div class="section-title">Common Trap Answers</div>
   <div class="section-sub">The mistakes that separate 125s from 132s</div>
 
@@ -718,7 +796,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 </div>
 
 <!-- ===== DRILLS ===== -->
-<div id="drills" class="section">
+<section id="drills" role="tabpanel" aria-labelledby="tab-drills" class="section">
   <div class="section-title">The 8 CARS Drills</div>
   <div class="section-sub">Targeted exercises to build specific CARS skills</div>
 
@@ -727,50 +805,50 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
     <p>Each drill isolates one critical CARS skill. Do them in order the first time. Return to weak areas repeatedly. The goal is to build automatic responses — like muscle memory for reasoning.</p>
   </div>
 
-  <div class="drill-list">
-    <div class="drill-item" onclick="loadDrill(0)">
+  <div class="drill-list" role="list">
+    <div class="drill-item" role="listitem" onclick="loadDrill(0)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')loadDrill(0)" aria-pressed="false">
       <div class="drill-badge">Drill 1</div>
       <span class="drill-difficulty diff-easy">Foundational</span>
       <h4>Main Idea Identification</h4>
       <p>Isolate the author's central thesis from supporting claims and examples</p>
     </div>
-    <div class="drill-item" onclick="loadDrill(1)">
+    <div class="drill-item" role="listitem" onclick="loadDrill(1)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')loadDrill(1)" aria-pressed="false">
       <div class="drill-badge">Drill 2</div>
       <span class="drill-difficulty diff-easy">Foundational</span>
       <h4>Author Tone Detection</h4>
       <p>Read for attitude: critical, supportive, cautious, nostalgic, ironic</p>
     </div>
-    <div class="drill-item" onclick="loadDrill(2)">
+    <div class="drill-item" role="listitem" onclick="loadDrill(2)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')loadDrill(2)" aria-pressed="false">
       <div class="drill-badge">Drill 3</div>
       <span class="drill-difficulty diff-med">Intermediate</span>
       <h4>Argument Structure</h4>
       <p>Identify the function of paragraphs and how evidence supports claims</p>
     </div>
-    <div class="drill-item" onclick="loadDrill(3)">
+    <div class="drill-item" role="listitem" onclick="loadDrill(3)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')loadDrill(3)" aria-pressed="false">
       <div class="drill-badge">Drill 4</div>
       <span class="drill-difficulty diff-med">Intermediate</span>
       <h4>Inference Reasoning</h4>
       <p>Determine what the author would most likely agree or disagree with</p>
     </div>
-    <div class="drill-item" onclick="loadDrill(4)">
+    <div class="drill-item" role="listitem" onclick="loadDrill(4)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')loadDrill(4)" aria-pressed="false">
       <div class="drill-badge">Drill 5</div>
       <span class="drill-difficulty diff-med">Intermediate</span>
       <h4>Trap Answer Detection</h4>
       <p>Identify "true but wrong" and "outside knowledge" traps in real time</p>
     </div>
-    <div class="drill-item" onclick="loadDrill(5)">
+    <div class="drill-item" role="listitem" onclick="loadDrill(5)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')loadDrill(5)" aria-pressed="false">
       <div class="drill-badge">Drill 6</div>
       <span class="drill-difficulty diff-hard">Advanced</span>
       <h4>Author vs. Other Views</h4>
       <p>Distinguish the author's claims from those they describe but oppose</p>
     </div>
-    <div class="drill-item" onclick="loadDrill(6)">
+    <div class="drill-item" role="listitem" onclick="loadDrill(6)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')loadDrill(6)" aria-pressed="false">
       <div class="drill-badge">Drill 7</div>
       <span class="drill-difficulty diff-hard">Advanced</span>
       <h4>Application to New Info</h4>
       <p>Apply the author's argument to scenarios not mentioned in the passage</p>
     </div>
-    <div class="drill-item" onclick="loadDrill(7)">
+    <div class="drill-item" role="listitem" onclick="loadDrill(7)" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')loadDrill(7)" aria-pressed="false">
       <div class="drill-badge">Drill 8</div>
       <span class="drill-difficulty diff-hard">Advanced</span>
       <h4>Full Passage Analysis</h4>
@@ -793,7 +871,7 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 </div>
 
 <!-- ===== TIMED PRACTICE ===== -->
-<div id="timed" class="section">
+<section id="timed" role="tabpanel" aria-labelledby="tab-timed" class="section">
   <div class="section-title">Timed Passage Practice</div>
   <div class="section-sub">Real MCAT pacing — 10 minutes per passage</div>
 
@@ -811,13 +889,13 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
   </div>
 
   <div id="timed-active-screen" style="display:none">
-    <div class="timer-display" id="timed-timer">10:00</div>
-    <div id="timed-passage-content"></div>
-    <div id="timed-questions-content"></div>
+    <div class="timer-display" id="timed-timer" aria-label="Time remaining" aria-live="off" role="timer">10:00</div>
+    <div id="timed-passage-content" aria-label="Passage"></div>
+    <div id="timed-questions-content" aria-label="Questions" aria-live="polite"></div>
     <div class="btn-row">
-      <button class="btn" id="timed-submit-btn" onclick="submitTimedPassage()" style="display:none">Submit Answers</button>
+      <button class="btn" id="timed-submit-btn" onclick="submitTimedPassage()" style="display:none" aria-label="Submit your answers and see results">Submit Answers</button>
     </div>
-    <div id="timed-results" style="display:none"></div>
+    <div id="timed-results" style="display:none" aria-live="polite"></div>
   </div>
 </div>
 
@@ -825,11 +903,24 @@ main { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
 
 <script>
 // ===== NAVIGATION =====
-function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => {
+    s.classList.remove('active');
+    s.setAttribute('aria-hidden', 'true');
+  });
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('active');
+    target.setAttribute('aria-hidden', 'false');
+  }
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+  }
 }
 
 // ===== DRILL DATA =====
@@ -1204,9 +1295,19 @@ let currentQ = 0;
 let drillScore = 0;
 let answered = false;
 
+// Init aria-hidden on non-active sections
+document.querySelectorAll('.section').forEach(s => {
+  s.setAttribute('aria-hidden', s.classList.contains('active') ? 'false' : 'true');
+});
+
 function loadDrill(index) {
-  document.querySelectorAll('.drill-item').forEach(d => d.classList.remove('active-drill'));
-  document.querySelectorAll('.drill-item')[index].classList.add('active-drill');
+  document.querySelectorAll('.drill-item').forEach(d => {
+    d.classList.remove('active-drill');
+    d.setAttribute('aria-pressed', 'false');
+  });
+  const items = document.querySelectorAll('.drill-item');
+  items[index].classList.add('active-drill');
+  items[index].setAttribute('aria-pressed', 'true');
 
   currentDrill = drills[index];
   currentQ = 0;
@@ -1219,6 +1320,14 @@ function loadDrill(index) {
 
   renderQuestion();
 }
+
+const qTypeTips = {
+  comp: '<strong>Comprehension question:</strong> The answer must come directly from the passage. Look for the specific sentence or idea the author stated. Avoid any information you\'re adding from outside the text.',
+  tone: '<strong>Tone & Attitude question:</strong> Find the author\'s evaluative language — words like "unfortunately," "merely," "rightly," or "naively." These signal attitude. Be careful not to pick the extreme version of a measured tone.',
+  arg:  '<strong>Argument Structure question:</strong> Ask what the paragraph or example <em>does</em>, not just what it says. Common functions: introduces evidence, presents counterargument, qualifies previous claim, draws conclusion.',
+  infer:'<strong>Inference question:</strong> Your answer must be grounded in a specific sentence or idea from the passage. If you can\'t point to where the passage supports your choice, be very cautious. Avoid leaps the author didn\'t make.',
+  trap: '<strong>Trap Detection question:</strong> Before choosing, actively look for: extreme language ("always/never"), information added from outside the passage, the reversed relationship trap, and "true but doesn\'t answer the question."'
+};
 
 function renderQuestion() {
   const q = currentDrill.questions[currentQ];
@@ -1233,19 +1342,24 @@ function renderQuestion() {
 
   let html = `<span class="qtype-badge ${typeClasses[q.type] || 'qtype-comp'}">${typeLabels[q.type] || 'Comprehension'}</span>`;
 
-  if (q.passage) {
-    html += `<div class="passage-box"><div class="passage-label">Passage</div>${q.passage.replace(/\n/g,'<br><br>')}</div>`;
+  // Question type tip
+  if (qTypeTips[q.type]) {
+    html += `<div class="qtype-tip">${qTypeTips[q.type]}</div>`;
   }
 
-  html += `<div class="question-text">${q.question}</div>`;
-  html += `<div class="answer-options" id="options">`;
+  if (q.passage) {
+    html += `<div class="passage-box" role="article" aria-label="Passage text"><div class="passage-label" aria-hidden="true">Passage</div>${q.passage.replace(/\n/g,'<br><br>')}</div>`;
+  }
+
+  html += `<div class="question-text" id="drill-qstem">${q.question}</div>`;
+  html += `<div class="answer-options" id="options" role="radiogroup" aria-labelledby="drill-qstem">`;
   const letters = ['A', 'B', 'C', 'D'];
   q.answers.forEach((a, i) => {
-    html += `<button class="answer-btn" onclick="selectAnswer(${i})">${letters[i]}. ${a}</button>`;
+    html += `<button class="answer-btn" onclick="selectAnswer(${i})" aria-label="Option ${letters[i]}: ${a.replace(/"/g,'&quot;')}">${letters[i]}. ${a}</button>`;
   });
   html += `</div>`;
-  html += `<div class="feedback-box" id="feedback-box"><div class="feedback-label" id="feedback-label"></div><p id="feedback-text"></p></div>`;
-  html += `<div class="btn-row" id="next-btn-row" style="display:none"><button class="btn" onclick="nextQuestion()">Next Question</button></div>`;
+  html += `<div class="feedback-box" id="feedback-box" role="alert" aria-live="polite" aria-atomic="true"><div class="feedback-label" id="feedback-label"></div><p id="feedback-text"></p></div>`;
+  html += `<div class="btn-row" id="next-btn-row" style="display:none"><button class="btn" onclick="nextQuestion()">Next Question &rarr;</button></div>`;
 
   document.getElementById('drill-content').innerHTML = html;
 }
@@ -1271,7 +1385,11 @@ function selectAnswer(index) {
   fb.className = 'feedback-box ' + (isCorrect ? 'correct' : 'incorrect');
   fb.style.display = 'block';
   fl.className = 'feedback-label ' + (isCorrect ? 'correct' : 'incorrect');
-  fl.textContent = isCorrect ? '<span aria-hidden="true">✓</span> Correct' : '<span aria-hidden="true">✗</span> Incorrect';
+  if (isCorrect) {
+    fl.innerHTML = '<span class="why-label">Why Correct</span> <span aria-hidden="true">&#10003;</span> Correct!';
+  } else {
+    fl.innerHTML = '<span class="trap-label">Trap Identified</span> <span aria-hidden="true">&#10007;</span> Incorrect — see why below';
+  }
   ft.textContent = q.feedback[index];
 
   document.getElementById('next-btn-row').style.display = 'flex';
@@ -1295,11 +1413,18 @@ function showDrillScore() {
                 "Keep drilling. CARS skills build through repetition. Review each explanation and try again.";
 
   document.getElementById('drill-content').innerHTML = `
-    <div class="score-box">
+    <div class="score-box" role="region" aria-label="Drill results">
       <div class="score-label">Drill Complete</div>
-      <div class="score-num">${drillScore}/${total}</div>
+      <div class="score-num" aria-label="${drillScore} out of ${total} correct">${drillScore}/${total}</div>
       <div class="score-label">${pct}% correct</div>
       <div class="score-message">${message}</div>
+      <div class="score-bands">
+        <h4>&#127919; Score Guide</h4>
+        <div class="band-row"><div class="band-dot bd-great" aria-hidden="true"></div><span>100% — Ready to move to the next drill</span></div>
+        <div class="band-row"><div class="band-dot bd-good" aria-hidden="true"></div><span>75–99% — Review missed questions, then advance</span></div>
+        <div class="band-row"><div class="band-dot bd-fair" aria-hidden="true"></div><span>50–74% — Re-read explanations before retrying</span></div>
+        <div class="band-row"><div class="band-dot bd-more" aria-hidden="true"></div><span>Below 50% — Retry after reviewing the Strategies tab</span></div>
+      </div>
     </div>
     <div class="btn-row" style="margin-top:16px">
       <button class="btn" onclick="loadDrill(${drills.indexOf(currentDrill)})">Retry This Drill</button>
